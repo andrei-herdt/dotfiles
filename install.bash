@@ -19,11 +19,12 @@ python-dev
 python3-dev
 rsync
 tmux
-tmux
 tree
 vim
 xsel
 zsh
+taskwarrior
+redshift
 )
 
 sudo apt update
