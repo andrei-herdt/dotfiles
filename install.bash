@@ -84,7 +84,6 @@ install_fzf() {
 
     git clone --depth 1 https://github.com/junegunn/fzf.git $DIR
     cd $DIR
-    ls
     ./install --all
 }
 
@@ -97,13 +96,29 @@ install_meld() {
 }
 
 install_googler() {
-    cd /tmp
+    DIR=/tmp/googler
+    if [ ! -d $DIR ]; then
+        mkdir $DIR
+    fi
+    cd $DIR
     git clone https://github.com/jarun/googler.git
-    cd googler
     sudo make install
     cd auto-completion/bash/
     sudo cp googler-completion.bash /etc/bash_completion.d/
+    rm -rf $DIR
 }
+
+install_google_chrome() {
+    DIR=/tmp/google_chrome
+    if [ ! -d $DIR ]; then
+        mkdir $DIR
+    fi
+    cd $DIR
+    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    sudo dpkg -i google-chrome-stable_current_amd64.deb
+    rm -rf $DIR
+}
+
 configure_vim() {
     echo configure vim
 
@@ -157,13 +172,6 @@ IFS=', '
 read -p "Choose your option(s)
 install
     1) packages
-    2) oh_my_zsh!
-    3) powerline symbols
-    4) solarized color scheme
-    5) fzf
-    6) meld
-    7) googler
-    8) all of the above
 configure
     10)  vim
     11)  tmux
@@ -176,33 +184,13 @@ for choice in "${array[@]}"; do
     case "$choice" in
         1)
             install_packages
-            ;;
-        2)
-            install_oh_my_zsh
-            ;;
-        3)
-            install_powerline_symbols
-            ;;
-        4)
-            install_solarized_color_scheme
-            ;;
-        5)
-            install_fzf
-            ;;
-        6)
-            install_meld
-            ;;
-        7)
-            install_googler
-            ;;
-        8)
-            install_packages
             install_oh_my_zsh
             install_powerline_symbols
             install_solarized_color_scheme
             install_fzf
             install_meld
             install_googler
+            install_google_chrome
             ;;
         10)
             configure_vim
