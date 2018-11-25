@@ -30,6 +30,8 @@ redshift
 htop
 tmuxinator
 tree
+terminator
+meld
 )
 
 sudo apt update
@@ -87,8 +89,8 @@ install_fzf() {
     ./install --all
 }
 
-install_meld() {
-    echo "install meld"
+install_atom() {
+    echo "install atom"
     curl -sL https://packagecloud.io/AtomEditor/atom/gpgkey | sudo apt-key add -
     sudo sh -c 'echo "deb [arch=amd64] https://packagecloud.io/AtomEditor/atom/any/ any main" > /etc/apt/sources.list.d/atom.list'
     sudo apt update
@@ -188,7 +190,7 @@ for choice in "${array[@]}"; do
             install_powerline_symbols
             install_solarized_color_scheme
             install_fzf
-            install_meld
+            install_atom
             install_googler
             install_google_chrome
             ;;
