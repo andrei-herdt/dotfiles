@@ -24,7 +24,12 @@ vim
 xsel
 zsh
 taskwarrior
+bugwarrior
+silverseacher-ag
 redshift
+htop
+tmuxinator
+tree
 )
 
 sudo apt update
@@ -73,6 +78,32 @@ install_solarized_color_scheme() {
     rm -rf $DIR
 }
 
+install_fzf() {
+    echo "install fzf"
+    DIR=~/.fzf/
+
+    git clone --depth 1 https://github.com/junegunn/fzf.git $DIR
+    cd $DIR
+    ls
+    ./install --all
+}
+
+install_meld() {
+    echo "install meld"
+    curl -sL https://packagecloud.io/AtomEditor/atom/gpgkey | sudo apt-key add -
+    sudo sh -c 'echo "deb [arch=amd64] https://packagecloud.io/AtomEditor/atom/any/ any main" > /etc/apt/sources.list.d/atom.list'
+    sudo apt update
+    sudo apt install atom
+}
+
+install_googler() {
+    cd /tmp
+    git clone https://github.com/jarun/googler.git
+    cd googler
+    sudo make install
+    cd auto-completion/bash/
+    sudo cp googler-completion.bash /etc/bash_completion.d/
+}
 configure_vim() {
     echo configure vim
 
@@ -129,13 +160,16 @@ install
     2) oh_my_zsh!
     3) powerline symbols
     4) solarized color scheme
-    5) all of the above
+    5) fzf
+    6) meld
+    7) googler
+    8) all of the above
 configure
-    6)  vim
-    7)  tmux
-    8)  git
-    9)  zsh
-    10) all of the above
+    10)  vim
+    11)  tmux
+    12)  git
+    13)  zsh
+    14) all of the above
 > " -a array
 
 for choice in "${array[@]}"; do
@@ -153,24 +187,36 @@ for choice in "${array[@]}"; do
             install_solarized_color_scheme
             ;;
         5)
+            install_fzf
+            ;;
+        6)
+            install_meld
+            ;;
+        7)
+            install_googler
+            ;;
+        8)
             install_packages
             install_oh_my_zsh
             install_powerline_symbols
             install_solarized_color_scheme
-            ;;
-        6)
-            configure_vim
-            ;;
-        7)
-            configure_tmux
-            ;;
-        8)
-            configure_git
-            ;;
-        9)
-            configure_zsh
+            install_fzf
+            install_meld
+            install_googler
             ;;
         10)
+            configure_vim
+            ;;
+        11)
+            configure_tmux
+            ;;
+        12)
+            configure_git
+            ;;
+        13)
+            configure_zsh
+            ;;
+        14)
             configure_vim
             configure_tmux
             configure_git
