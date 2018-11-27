@@ -24,8 +24,6 @@ vim
 xsel
 zsh
 taskwarrior
-bugwarrior
-silverseacher-ag
 redshift
 htop
 tmuxinator
@@ -123,6 +121,33 @@ install_google_chrome() {
     rm -rf $DIR
 }
 
+install_bugwarrior() {
+    DIR=/tmp/bugwarrior
+    if [ ! -d $DIR ]; then
+        mkdir $DIR
+    fi
+    cd $DIR
+    wget https://github.com/ralphbean/bugwarrior/tarball/master -O bugwarrior-latest.tar.gz
+    tar -xzvf bugwarrior-latest.tar.gz
+    cd ralphbean-bugwarrior-*
+    sudo python setup.py install
+    sudo rm -rf $DIR
+}
+ 
+install_silverseacher-ag() {
+    DIR=/tmp/silversearcher
+    if [ ! -d $DIR ]; then
+        mkdir $DIR
+    fi
+    cd $DIR
+    git clone https://github.com/ggreer/the_silver_searcher.git
+    cd the_silver_searcher
+    sudo apt install -y automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev
+    ./build.sh
+    sudo make install
+    rm -rf $DIR
+}
+
 configure_vim() {
     echo configure vim
 
@@ -176,6 +201,7 @@ IFS=', '
 read -p "Choose your option(s)
 install
     1) packages
+    2) everything else
 configure
     10)  vim
     11)  tmux
@@ -187,7 +213,9 @@ configure
 for choice in "${array[@]}"; do
     case "$choice" in
         1)
-            install_packages
+            install_apt_packages
+            ;;
+        2)
             install_powerline_symbols
             install_solarized_color_scheme
             install_fzf
@@ -195,6 +223,8 @@ for choice in "${array[@]}"; do
             install_googler
             install_google_chrome
             install_oh_my_zsh
+	    install_bugwarrior
+	    install_silverseacher-ag
             ;;
         10)
             configure_vim
