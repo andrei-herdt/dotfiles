@@ -32,6 +32,7 @@ tmuxinator
 tree
 terminator
 meld
+xclip
 )
 
 sudo apt update
@@ -104,6 +105,7 @@ install_googler() {
     fi
     cd $DIR
     git clone https://github.com/jarun/googler.git
+    cd googler
     sudo make install
     cd auto-completion/bash/
     sudo cp googler-completion.bash /etc/bash_completion.d/
@@ -186,13 +188,13 @@ for choice in "${array[@]}"; do
     case "$choice" in
         1)
             install_packages
-            install_oh_my_zsh
             install_powerline_symbols
             install_solarized_color_scheme
             install_fzf
             install_atom
             install_googler
             install_google_chrome
+            install_oh_my_zsh
             ;;
         10)
             configure_vim
