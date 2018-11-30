@@ -84,3 +84,6 @@ alias t='tmux attach || tmux new'
 alias tt='tmux attach -t 1 || tmux new -t 0'
 
 export PATH="/usr/lib/ccache:$PATH"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+

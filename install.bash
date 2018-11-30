@@ -10,6 +10,7 @@ echo install some basic command line utilities using apt
 packages=(
 build-essential
 clang-format
+clang-tidy
 cmake
 curl
 dconf-cli
