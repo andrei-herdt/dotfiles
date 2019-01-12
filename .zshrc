@@ -83,4 +83,6 @@ eval `dircolors ~/.dir_colors/dircolors`
 alias t='tmux attach || tmux new'
 alias tt='tmux attach -t 1 || tmux new -t 0'
 
+alias ti='task add tag:inbox'
+
 export PATH="/usr/lib/ccache:$PATH"
