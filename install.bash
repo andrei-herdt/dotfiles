@@ -173,7 +173,8 @@ configure_zsh() {
 IFS=', '
 read -p "Choose your option(s)
 install
-    1) packages
+    1) apt packages
+    2) other packages
 configure
     10)  vim
     11)  tmux
@@ -186,6 +187,8 @@ for choice in "${array[@]}"; do
     case "$choice" in
         1)
             install_packages
+            ;;
+        2)
             install_oh_my_zsh
             install_powerline_symbols
             install_solarized_color_scheme
