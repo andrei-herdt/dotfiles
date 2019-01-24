@@ -20,12 +20,12 @@ python3-dev
 rsync
 tmux
 tree
-vim
+vim-gnome
 xsel
 zsh
 taskwarrior
 bugwarrior
-silverseacher-ag
+silversearcher-ag
 redshift
 htop
 tmuxinator
