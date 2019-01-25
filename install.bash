@@ -28,6 +28,7 @@ bugwarrior
 silversearcher-ag
 redshift
 htop
+openssh-server
 tmuxinator
 tree
 terminator
