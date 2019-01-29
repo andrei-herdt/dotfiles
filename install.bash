@@ -32,6 +32,7 @@ tmuxinator
 tree
 terminator
 meld
+parallel
 )
 
 sudo apt update
