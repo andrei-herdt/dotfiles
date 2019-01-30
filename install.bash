@@ -34,6 +34,7 @@ tree
 terminator
 meld
 parallel
+mattermost-desktop
 )
 
 sudo apt update
