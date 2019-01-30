@@ -101,11 +101,8 @@ install_atom() {
 
 install_googler() {
     DIR=/tmp/googler
-    if [ ! -d $DIR ]; then
-        mkdir $DIR
-    fi
+    git clone https://github.com/jarun/googler.git $DIR
     cd $DIR
-    git clone https://github.com/jarun/googler.git
     sudo make install
     cd auto-completion/bash/
     sudo cp googler-completion.bash /etc/bash_completion.d/
