@@ -82,6 +82,7 @@ eval `dircolors ~/.dir_colors/dircolors`
 
 alias t='tmux attach || tmux new'
 alias tt='tmux attach -t 1 || tmux new -t 0'
+alias cclip='xclip -selection clipboard'
 
 export PATH="/usr/lib/ccache:$PATH"
 
