@@ -63,6 +63,8 @@
         Plug 'vimwiki/vimwiki'                  " Notes and todo lists in vim
         Plug 'vim-scripts/matchit.zip'          " Improve % operation
         Plug 'godlygeek/tabular'                " Text alignment
+        Plug 'google/vim-maktaba'
+        Plug 'bazelbuild/vim-bazel'
 
         call plug#end()
     endif
