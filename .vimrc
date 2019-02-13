@@ -204,8 +204,8 @@
 
     " F keys
     noremap <F2> :w<CR>
-    noremap <F3> :close<CR>
-    noremap <F4> :bd<CR>
+    noremap <F9> :close<CR>
+    noremap <F10> :bd<CR>
     noremap <F5> :bp<CR>
     noremap <F6> :bn<CR>
     noremap <S-F5> :cp<CR>
