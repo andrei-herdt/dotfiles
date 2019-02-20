@@ -65,6 +65,7 @@
         Plug 'godlygeek/tabular'                " Text alignment
         Plug 'google/vim-maktaba'
         Plug 'bazelbuild/vim-bazel'
+        Plug 'blindFS/vim-taskwarrior'
 
         call plug#end()
     endif
