@@ -68,7 +68,7 @@ install_powerline_symbols() {
     fi
 }
 
-install_solarized_color_scheme() {
+configure_color_scheme() {
     echo "install solarized color scheme"
     local DIR="/tmp/solarized$$"
 
@@ -119,6 +119,10 @@ install_google_chrome() {
     wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
     sudo dpkg -i google-chrome-stable_current_amd64.deb
     rm -rf $DIR
+}
+
+install_gdbgui() {
+    pip install gdbgui
 }
 
 configure_vim() {
@@ -191,11 +195,11 @@ for choice in "${array[@]}"; do
         2)
             install_oh_my_zsh
             install_powerline_symbols
-            install_solarized_color_scheme
             install_fzf
             install_atom
             install_googler
             install_google_chrome
+            install_gdbgui
             ;;
         10)
             configure_vim
@@ -210,6 +214,9 @@ for choice in "${array[@]}"; do
             configure_zsh
             ;;
         14)
+            configure_color_scheme
+            ;;
+        15)
             configure_vim
             configure_tmux
             configure_git
