@@ -87,3 +87,7 @@ alias cclip='xclip -selection clipboard'
 export PATH="/usr/lib/ccache:$PATH"
 
 export KEYTIMEOUT=1
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+alias ti='task add tag:inbox'

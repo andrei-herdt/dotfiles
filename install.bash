@@ -10,6 +10,7 @@ echo install some basic command line utilities using apt
 packages=(
 build-essential
 clang-format
+clang-tidy
 cmake
 curl
 dconf-cli
@@ -35,6 +36,7 @@ terminator
 meld
 parallel
 mattermost-desktop
+xclip
 )
 
 sudo apt update
@@ -102,8 +104,12 @@ install_atom() {
 
 install_googler() {
     DIR=/tmp/googler
-    git clone https://github.com/jarun/googler.git $DIR
+    if [ ! -d $DIR ]; then
+        mkdir $DIR
+    fi
     cd $DIR
+    git clone https://github.com/jarun/googler.git
+    cd googler
     sudo make install
     cd auto-completion/bash/
     sudo cp googler-completion.bash /etc/bash_completion.d/
