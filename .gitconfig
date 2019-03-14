@@ -1,16 +1,24 @@
 [user]
-    name = John Doe
-    email = john.doe@domain.com
-[credential]
-    # for linux only
-    helper = store
+	name = Richard Bellman
+	email = ev-ft-bellman@list.bmw.com
+[remote "origin"]
+	prune = true
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[pager]
+	branch = false
 [alias]
-    # for gerrit only
-    pdm = push origin HEAD:refs/drafts/master
-    pm = push origin HEAD:refs/for/master
-    pd = push origin HEAD:refs/for/develop
-
-[include]
-    path = .gitconfig_common
-
-# vim: sw=4 ts=4 et:
+    co = checkout
+    br = branch
+    ci = commit -v
+    cam = commit -am
+    co = checkout
+    df = diff
+    st = status
+    sa = stash
+    mt = mergetool
+    cp = cherry-pick
+    pl = pull --rebase
