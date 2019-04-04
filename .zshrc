@@ -83,6 +83,9 @@ eval `dircolors ~/.dir_colors/dircolors`
 alias t='tmux attach || tmux new'
 alias tt='tmux attach -t 1 || tmux new -t 0'
 alias cclip='xclip -selection clipboard'
+alias git='git --no-pager'
+alias zshconfig="vi ~/.zshrc"
+alias vimconfig="vi ~/.vimrc"
 
 export PATH="/usr/lib/ccache:$PATH"
 
@@ -90,4 +93,44 @@ export KEYTIMEOUT=1
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-alias ti='task add tag:inbox'
+if [[ -f "/etc/bmwrpp-bootstrap/zshrc" ]]; then
+  source "/etc/bmwrpp-bootstrap/zshrc"
+else
+  echo "bmwrpp-bootstrap not installed, please remove BMWRPP section from /home/bellman/.zshrc"
+fi
+###  BMWRPP-END  ###
+
+source ~/.fzf.zsh
+
+# {{{1 vi mode cursor indicator
+function zle-keymap-select zle-line-init
+{
+    # change cursor shape
+    if [[ -n "$TMUX" ]]; then  # tmux
+      case $KEYMAP in
+          vicmd)      print -n '\033[0 q';; # block cursor
+          viins|main) print -n '\033[6 q';; # line cursor
+      esac
+    else # iTerm2
+      case $KEYMAP in 
+          vicmd)      print -n -- "\E]50;CursorShape=0\C-G";;  # block cursor
+          viins|main) print -n -- "\E]50;CursorShape=1\C-G";;  # line cursor
+      esac
+    fi
+
+    zle reset-prompt
+    zle -R
+}
+
+function zle-line-finish
+{
+    if [[ -n "$TMUX" ]]; then # tmux
+      print -n -- '\033[0 q'  # block cursor
+    else # iTerm2
+      print -n -- "\E]50;CursorShape=0\C-G"  # block cursor
+    fi
+}
+
+zle -N zle-line-init
+zle -N zle-line-finish
+zle -N zle-keymap-select
