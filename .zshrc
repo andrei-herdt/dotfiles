@@ -93,13 +93,6 @@ export KEYTIMEOUT=1
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-if [[ -f "/etc/bmwrpp-bootstrap/zshrc" ]]; then
-  source "/etc/bmwrpp-bootstrap/zshrc"
-else
-  echo "bmwrpp-bootstrap not installed, please remove BMWRPP section from /home/bellman/.zshrc"
-fi
-###  BMWRPP-END  ###
-
 source ~/.fzf.zsh
 
 # {{{1 vi mode cursor indicator
