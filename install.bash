@@ -192,7 +192,7 @@ configure
     11)  tmux
     12)  git
     13)  zsh
-    14) all of the above
+    14)  color scheme
 > " -a array
 
 for choice in "${array[@]}"; do
