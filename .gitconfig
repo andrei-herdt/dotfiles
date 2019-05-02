@@ -1,6 +1,6 @@
 [user]
-	name = Richard Bellman
-	email = ev-ft-bellman@list.bmw.com
+	name = Andrei Herdt
+	email = andrei.herdt@tra.ai
 [remote "origin"]
 	prune = true
 [filter "lfs"]

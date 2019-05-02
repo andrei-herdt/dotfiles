@@ -35,8 +35,9 @@ tree
 terminator
 meld
 parallel
-mattermost-desktop
 xclip
+python-pip
+gnome-tweak-tool
 )
 
 sudo apt update
@@ -124,6 +125,7 @@ install_google_chrome() {
     cd $DIR
     wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
     sudo dpkg -i google-chrome-stable_current_amd64.deb
+    cd
     rm -rf $DIR
 }
 
