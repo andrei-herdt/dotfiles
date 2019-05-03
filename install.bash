@@ -38,6 +38,7 @@ parallel
 xclip
 python-pip
 gnome-tweak-tool
+vifm
 )
 
 sudo apt update
