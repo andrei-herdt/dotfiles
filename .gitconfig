@@ -23,3 +23,4 @@
     mt = mergetool
     cp = cherry-pick
     pl = pull --rebase
+    rso = remote show origin
