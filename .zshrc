@@ -86,6 +86,7 @@ alias cclip='xclip -selection clipboard'
 alias git='git --no-pager'
 alias zshconfig="vi ~/.zshrc"
 alias vimconfig="vi ~/.vimrc"
+alias svi='vi $(ag $1 -l)'
 
 export PATH="/usr/lib/ccache:$PATH"
 
