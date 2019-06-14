@@ -47,6 +47,11 @@ unset packages;
 
 }
 
+install_scripts() {
+    echo "install shell scripts"
+    sudo mv svi.sh /usr/local/bin/
+}
+
 install_oh_my_zsh() {
     echo "install oh my zsh"
     sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
@@ -202,6 +207,7 @@ for choice in "${array[@]}"; do
             install_packages
             ;;
         2)
+            install_scripts
             install_oh_my_zsh
             install_powerline_symbols
             install_fzf
