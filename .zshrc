@@ -87,6 +87,7 @@ alias git='git --no-pager'
 alias zshconfig="vi ~/.zshrc"
 alias vimconfig="vi ~/.vimrc"
 alias fn='find . -name'
+alias svi='/usr/local/bin/svi.sh'
 
 export PATH="/usr/lib/ccache:$PATH"
 
