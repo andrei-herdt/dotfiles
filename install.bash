@@ -49,7 +49,7 @@ unset packages;
 
 install_scripts() {
     echo "install shell scripts"
-    sudo cp bin/svi.sh /usr/local/bin/
+    sudo cp bin/viag.sh /usr/local/bin/
 }
 
 install_oh_my_zsh() {
