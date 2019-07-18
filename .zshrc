@@ -88,6 +88,7 @@ alias zshconfig="vi ~/.zshrc"
 alias vimconfig="vi ~/.vimrc"
 alias fn='find . -name'
 alias viag='/usr/local/bin/viag.sh'
+alias vifn='/usr/local/bin/vifn.sh'
 
 export PATH="/usr/lib/ccache:$PATH"
 

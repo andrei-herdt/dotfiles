@@ -386,7 +386,7 @@
             nnoremap <silent> <leader>gc :Gcommit<CR>
             nnoremap <silent> <leader>gb :Gblame<CR>
             nnoremap <silent> <leader>gl :Glog<CR>
-            "nnoremap <silent> <leader>gp :Git push<CR>
+            nnoremap <silent> <leader>gp :Git push<CR>
             nnoremap <silent> <leader>gr :Gread<CR>
             nnoremap <silent> <leader>gw :Gwrite<CR>
             nnoremap <silent> <leader>ge :Gedit<CR>
@@ -460,6 +460,13 @@
             augroup clangFMT
                 autocmd FileType cpp let g:clang_format#auto_format = 1
             augroup END
+        endif
+    " }
+
+    " Vimwiki {
+        if isdirectory(expand("~/.vim/plugged/vim-clang-format/"))
+            nnoremap <silent> <leader>wh :Vimwiki2HTML<CR>
+            let g:vimwiki_list = [{'path': '~/Documents/notes/', 'syntax': 'markdown', 'ext': '.md'}]
         endif
     " }
 

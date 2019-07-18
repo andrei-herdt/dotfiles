@@ -50,6 +50,7 @@ unset packages;
 install_scripts() {
     echo "install shell scripts"
     sudo cp bin/viag.sh /usr/local/bin/
+    sudo cp bin/vifn.sh /usr/local/bin/
 }
 
 install_oh_my_zsh() {
@@ -193,6 +194,7 @@ read -p "Choose your option(s)
 install
     1) apt packages
     2) other packages
+    3) scripts
 configure
     10)  vim
     11)  tmux
@@ -207,7 +209,6 @@ for choice in "${array[@]}"; do
             install_packages
             ;;
         2)
-            install_scripts
             install_oh_my_zsh
             install_powerline_symbols
             install_fzf
@@ -215,6 +216,9 @@ for choice in "${array[@]}"; do
             install_googler
             install_google_chrome
             install_gdbgui
+            ;;
+        3)
+            install_scripts
             ;;
         10)
             configure_vim
