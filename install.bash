@@ -39,6 +39,7 @@ xclip
 python-pip
 gnome-tweak-tool
 vifm
+rename
 )
 
 sudo apt update
