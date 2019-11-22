@@ -66,6 +66,8 @@
         Plug 'google/vim-maktaba'
         Plug 'bazelbuild/vim-bazel'
         Plug 'blindFS/vim-taskwarrior'
+        Plug 'lervag/vimtex'
+
 
         call plug#end()
     endif
