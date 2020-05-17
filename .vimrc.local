@@ -1,3 +1,4 @@
 " put your additional vim stuff here
 imap jj <Esc>
+map <Esc><Esc> :w<CR>
 

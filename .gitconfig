@@ -15,6 +15,7 @@
     br = branch
     ci = commit -v
     cam = commit -am
+    cammend = commit -a --ammend
     ca = commit -a
     co = checkout
     df = diff
