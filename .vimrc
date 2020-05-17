@@ -67,6 +67,9 @@
         Plug 'bazelbuild/vim-bazel'
         Plug 'blindFS/vim-taskwarrior'
         Plug 'lervag/vimtex'
+        Plug 'LaTeX-Box-Team/LaTeX-Box'
+        Plug 'nvie/vim-flake8'
+        Plug 'dense-analysis/ale'
 
 
         call plug#end()
@@ -398,7 +401,7 @@
 
     " YouCompleteMe {
         if isdirectory(expand("~/.vim/plugged/youcompleteme/"))
-            "let g:acp_enableAtStartup = 0
+            let g:acp_enableAtStartup = 1
 
             " self explanatory af
             let g:ycm_collect_identifiers_from_tags_files = 1
@@ -406,8 +409,8 @@
 
             " remap Ultisnips for compatibility for YCM
             let g:ycm_use_ultisnips_completer = 1
-            let g:UltiSnipsExpandTrigger = '<C-j>'
-            let g:UltiSnipsJumpForwardTrigger = '<C-j>'
+            let g:UltiSnipsExpandTrigger = '<c-j>'
+            let g:UltiSnipsJumpForwardTrigger = '<c-j>'
             let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
 
             let g:ycm_show_diagnostics_ui = 0
@@ -468,11 +471,20 @@
     " Vimwiki {
         if isdirectory(expand("~/.vim/plugged/vim-clang-format/"))
             nnoremap <silent> <leader>wh :Vimwiki2HTML<CR>
-            let g:vimwiki_list = [{'path': '~/Documents/notes/', 'syntax': 'markdown', 'ext': '.md'}]
+            let g:vimwiki_list = [{'path': '~/Documents/notes/lemo', 'syntax': 'markdown', 'ext': '.md'}]
         endif
     " }
 
+    " vimtex {
+        let g:tex_flavor='latex'
+        let g:vimtex_view_method='zathura'
+        let g:vimtex_quickfix_mode=0
+        set conceallevel=1
+        let g:tex_conceal='abdmg'
+    " }
+
 " }
+
 
 " GVim Settings {
     if has('gui_running')
