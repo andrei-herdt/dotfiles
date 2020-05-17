@@ -51,7 +51,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(vi-mode docker)
+plugins=(vi-mode docker git web-search z)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -61,7 +61,7 @@ source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
-export EDITOR='vim'
+export EDITOR='nvim'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -88,7 +88,6 @@ alias zshconfig="vi ~/.zshrc"
 alias vimconfig="vi ~/.vimrc"
 alias fn='find . -name'
 alias viag='/usr/local/bin/viag.sh'
-alias vifn='/usr/local/bin/vifn.sh'
 
 export PATH="/usr/lib/ccache:$PATH"
 
@@ -130,3 +129,31 @@ function zle-line-finish
 zle -N zle-line-init
 zle -N zle-line-finish
 zle -N zle-keymap-select
+
+# taskwarrior
+alias in='task add +in'
+alias today='task add +today'
+export PS1='$(task +in +PENDING count) '$PS1
+tickle () {
+    deadline=$1
+    shift
+    in +tickle wait:$deadline $@
+}
+alias tick=tickle
+alias think='tickle +1d'
+alias rnd='task add +rnd'
+
+webpage_title (){
+    wget -qO- "$*" | hxselect -s '\n' -c  'title' 2>/dev/null
+}
+
+read_and_review (){
+    link="$1"
+    title=$link
+    echo $title
+    descr="\"Read and review: $title\""
+    id=$(task add +next +rnr "$descr" | sed -n 's/Created task \(.*\)./\1/p')
+    task "$id" annotate "$link"
+}
+
+alias rnr=read_and_review
