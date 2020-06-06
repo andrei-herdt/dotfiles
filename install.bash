@@ -163,6 +163,13 @@ configure_vim() {
     ./install.py --clang-completer
 }
 
+configure_vifm() {
+    echo configure vifm
+
+    rm -rf ~/.config/vifm/colors
+    git clone https://github.com/vifm/vifm-colors ~/.config/vifm/colors
+}
+
 configure_tmux() {
     echo configure tmux
 
@@ -203,6 +210,8 @@ configure
     12)  git
     13)  zsh
     14)  color scheme
+    15)  vifm
+    16)  all
 > " -a array
 
 for choice in "${array[@]}"; do
@@ -238,10 +247,15 @@ for choice in "${array[@]}"; do
             configure_color_scheme
             ;;
         15)
+            configure_vifm
+            ;;
+        16)
             configure_vim
+            configure_vifm
             configure_tmux
             configure_git
             configure_zsh
+            configure_color_scheme
             ;;
         *)
             echo invalid number
