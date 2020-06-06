@@ -204,6 +204,13 @@ configure_zsh() {
     cp .zshrc ~
 }
 
+configure_taskwarrior() {
+    echo configure taskwarrior
+
+    cd "$(dirname "${BASH_SOURCE}")";
+    cp .taskrc ~
+}
+
 IFS=', '
 read -p "Choose your option(s)
 install
@@ -217,7 +224,8 @@ configure
     13)  zsh
     14)  color scheme
     15)  vifm
-    16)  all
+    16)  taskwarrior
+    17)  all
 > " -a array
 
 for choice in "${array[@]}"; do
@@ -257,6 +265,9 @@ for choice in "${array[@]}"; do
             configure_vifm
             ;;
         16)
+            configure_taskwarrior
+            ;;
+        17)
             configure_vim
             configure_vifm
             configure_tmux
