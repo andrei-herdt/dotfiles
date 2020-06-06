@@ -157,3 +157,8 @@ read_and_review (){
 }
 
 alias rnr=read_and_review
+
+# autojump
+[[ -s /home/andrei/.autojump/etc/profile.d/autojump.sh ]] && source /home/andrei/.autojump/etc/profile.d/autojump.sh
+
+autoload -U compinit && compinit -u

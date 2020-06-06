@@ -114,9 +114,7 @@ install_atom() {
 
 install_googler() {
     DIR=/tmp/googler
-    if [ ! -d $DIR ]; then
-        mkdir $DIR
-    fi
+    mkdir -p $DIR
     cd $DIR
     git clone https://github.com/jarun/googler.git
     cd googler
@@ -128,13 +126,21 @@ install_googler() {
 
 install_google_chrome() {
     DIR=/tmp/google_chrome
-    if [ ! -d $DIR ]; then
-        mkdir $DIR
-    fi
+    mkdir -p $DIR
     cd $DIR
     wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
     sudo dpkg -i google-chrome-stable_current_amd64.deb
     cd
+    rm -rf $DIR
+}
+
+install_autojump() {
+    DIR=/tmp/autojump
+    mkdir -p $DIR
+    cd $DIR
+    git clone git@github.com:wting/autojump.git
+    cd autojump
+    ./install.py
     rm -rf $DIR
 }
 
@@ -227,6 +233,7 @@ for choice in "${array[@]}"; do
             install_googler
             install_google_chrome
             install_gdbgui
+            install_autojump
             ;;
         3)
             install_scripts
