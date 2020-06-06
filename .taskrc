@@ -39,5 +39,10 @@ report.today.description       = Today
 report.today.filter            = status:pending limit:page (+today)
 report.today.labels            = ID,Description
 
+report.work.columns           = id,description
+report.work.description       = Work
+report.work.filter            = status:pending limit:page (+work or +@work)
+report.work.labels            = ID,Description
+
 context.work=+@work
 context.home=+@home
