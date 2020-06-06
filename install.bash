@@ -40,6 +40,7 @@ python-pip
 gnome-tweak-tool
 vifm
 rename
+zathura
 )
 
 sudo apt update
