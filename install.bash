@@ -25,6 +25,7 @@ vim-gnome
 xsel
 zsh
 taskwarrior
+taskd
 bugwarrior
 silversearcher-ag
 redshift
@@ -209,6 +210,28 @@ configure_taskwarrior() {
 
     cd "$(dirname "${BASH_SOURCE}")";
     cp .taskrc ~
+
+}
+
+configure_taskd() {
+    echo configure taskd
+    export TASKDDATA=~/.config/taskd
+    sudo mkdir -p $TASKDDATA
+    taskd init
+    cp -r /usr/share/taskd/pki $TASKDDATA
+    cd "$(dirname "${BASH_SOURCE}")";
+    hostname -f >> vars
+    cp vars $TASKDDATA/pki/
+    cd $TASKDDATA/pki/
+    ./generate
+    cp *.pem $TASKDDATA
+    taskd config --force client.cert $TASKDDATA/client.cert.pem
+    taskd config --force log $PWD/taskd.log
+    taskd config --force pid.file $PWD/taskd.pid
+    taskd config --force server localhost:53589
+    taskd config
+    taskdctl start
+    taskd add org Public
 }
 
 IFS=', '
@@ -225,7 +248,8 @@ configure
     14)  color scheme
     15)  vifm
     16)  taskwarrior
-    17)  all
+    17)  taskd
+    18)  all
 > " -a array
 
 for choice in "${array[@]}"; do
@@ -268,6 +292,9 @@ for choice in "${array[@]}"; do
             configure_taskwarrior
             ;;
         17)
+            configure_taskwarrior
+            ;;
+        18)
             configure_vim
             configure_vifm
             configure_tmux
