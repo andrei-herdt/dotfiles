@@ -216,13 +216,13 @@ configure_taskwarrior() {
 configure_taskd() {
     echo configure taskd
     export TASKDDATA=~/.config/taskd
-    sudo mkdir -p $TASKDDATA
+    mkdir -p $TASKDDATA
     taskd init
     cp -r /usr/share/taskd/pki $TASKDDATA
     cd "$(dirname "${BASH_SOURCE}")";
-    hostname -f >> vars
     cp vars $TASKDDATA/pki/
     cd $TASKDDATA/pki/
+    echo "CN=`hostname -f`" >> vars
     ./generate
     cp *.pem $TASKDDATA
     taskd config --force client.cert $TASKDDATA/client.cert.pem
@@ -230,8 +230,6 @@ configure_taskd() {
     taskd config --force pid.file $PWD/taskd.pid
     taskd config --force server localhost:53589
     taskd config
-    taskdctl start
-    taskd add org Public
 }
 
 IFS=', '
@@ -292,7 +290,7 @@ for choice in "${array[@]}"; do
             configure_taskwarrior
             ;;
         17)
-            configure_taskwarrior
+            configure_taskd
             ;;
         18)
             configure_vim
