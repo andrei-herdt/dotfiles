@@ -70,6 +70,7 @@
         Plug 'LaTeX-Box-Team/LaTeX-Box'
         Plug 'nvie/vim-flake8'
         Plug 'dense-analysis/ale'
+        Plug 'mileszs/ack.vim'
 
 
         call plug#end()
@@ -483,6 +484,9 @@
         let g:tex_conceal='abdmg'
     " }
 
+    " ack {
+        let g:ackprg = 'ag --nogroup --nocolor --column'
+    " }
 " }
 
 
