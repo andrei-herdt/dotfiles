@@ -22,6 +22,7 @@ rsync
 tmux
 tree
 vim-gnome
+neovim
 xsel
 zsh
 taskwarrior
