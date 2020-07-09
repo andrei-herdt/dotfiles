@@ -43,6 +43,7 @@ gnome-tweak-tool
 vifm
 rename
 zathura
+gitk
 )
 
 sudo apt update
