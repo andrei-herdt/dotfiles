@@ -105,14 +105,6 @@ install_fzf() {
     ./install --all
 }
 
-install_atom() {
-    echo "install atom"
-    curl -sL https://packagecloud.io/AtomEditor/atom/gpgkey | sudo apt-key add -
-    sudo sh -c 'echo "deb [arch=amd64] https://packagecloud.io/AtomEditor/atom/any/ any main" > /etc/apt/sources.list.d/atom.list'
-    sudo apt update
-    sudo apt install atom
-}
-
 install_googler() {
     DIR=/tmp/googler
     mkdir -p $DIR
@@ -139,7 +131,7 @@ install_autojump() {
     DIR=/tmp/autojump
     mkdir -p $DIR
     cd $DIR
-    git clone git@github.com:wting/autojump.git
+    git clone https://github.com/wting/autojump.git
     cd autojump
     ./install.py
     rm -rf $DIR
@@ -259,7 +251,6 @@ for choice in "${array[@]}"; do
             install_oh_my_zsh
             install_powerline_symbols
             install_fzf
-            install_atom
             install_googler
             install_google_chrome
             install_gdbgui
