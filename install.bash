@@ -162,6 +162,9 @@ configure_vim() {
     # compile youcompleteme
     cd ~/.vim/plugged/youcompleteme || exit 1
     ./install.py --clang-completer
+
+    # copy custom snippets
+    cp -r my_snippets ~/.vim/
 }
 
 configure_vifm() {

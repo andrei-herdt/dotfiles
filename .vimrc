@@ -71,7 +71,7 @@
         Plug 'nvie/vim-flake8'
         Plug 'dense-analysis/ale'
         Plug 'mileszs/ack.vim'
-
+        Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 
         call plug#end()
     endif
@@ -283,13 +283,11 @@
     nnoremap <silent> <leader>q :copen<CR>
     " Clear  quickfix window
     nnoremap <silent> <leader>cq :cexpr []<CR>
+
+    map <Esc><Esc> :w<CR>
 " }
 
 " Plugin Settings/Mappings {
-
-    " SnipMate {
-        let g:snips_author = 'Dominik Drexl <dominik.drexl@bmw.de>'
-    " }
 
     " Commentary {
         if isdirectory(expand("~/.vim/plugged/vim-commentary"))
@@ -460,20 +458,15 @@
     " }
 
     " Clang Format {
-        if isdirectory(expand("~/.vim/plugged/vim-clang-format/"))
-            let g:clang_format#detect_style_file = 1
-
             augroup clangFMT
-                autocmd FileType cpp let g:clang_format#auto_format = 1
+                autocmd FileType cpp let g:clang_format#auto_format = 0
+                autocmd FileType c let g:clang_format#auto_format = 0
             augroup END
-        endif
     " }
 
-    " Vimwiki {
-        if isdirectory(expand("~/.vim/plugged/vim-clang-format/"))
-            nnoremap <silent> <leader>wh :Vimwiki2HTML<CR>
-            let g:vimwiki_list = [{'path': '~/Documents/notes/lemo', 'syntax': 'markdown', 'ext': '.md'}]
-        endif
+    " vimwiki {
+        nnoremap <silent> <leader>wh :Vimwiki2HTML<CR>
+        let g:vimwiki_list = [{'path': '~/Documents/notes/lemo', 'syntax': 'markdown', 'ext': '.md'}]
     " }
 
     " vimtex {
@@ -487,7 +480,21 @@
     " ack {
         let g:ackprg = 'ag --nogroup --nocolor --column'
     " }
-" }
+
+    " ale {
+        nmap <F10> :ALEFix<CR>
+        let g:ale_fix_on_save = 0
+        let g:ale_lint_on_text_changed = 'never'
+        let g:ale_lint_on_insert_leave = 0
+        " You can disable this option too
+        " if you don't want linters to run on opening a file
+        let g:ale_lint_on_enter = 0
+    " }
+    " Ultisnips {
+        if isdirectory(expand("~/.vim/my_snippets/"))
+            let g:UltiSnipsSnippetDirectories=["~/.vim/my_snippets/"]
+        endif
+    " }
 
 
 " GVim Settings {
@@ -574,3 +581,6 @@
         source ~/.vimrc.local
     endif
 " }
+
+au BufNewFile,BufRead *.py set foldmethod=indent
+set foldnestmax=1
