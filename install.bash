@@ -222,7 +222,14 @@ configure_taskd() {
     echo "CN=`hostname -f`" >> vars
     ./generate
     cp *.pem $TASKDDATA
+
     taskd config --force client.cert $TASKDDATA/client.cert.pem
+    taskd config --force client.key  $TASKDDATA/client.key.pem
+    taskd config --force server.cert $TASKDDATA/server.cert.pem
+    taskd config --force server.key  $TASKDDATA/server.key.pem
+    taskd config --force server.crl  $TASKDDATA/server.crl.pem
+    taskd config --force ca.cert     $TASKDDATA/ca.cert.pem
+
     taskd config --force log $PWD/taskd.log
     taskd config --force pid.file $PWD/taskd.pid
     taskd config --force server localhost:53589
