@@ -212,7 +212,7 @@ configure_taskwarrior() {
 
 configure_taskd() {
     echo configure taskd
-    export TASKDDATA=~/.config/taskd
+    export TASKDDATA=/var/taskd/
     mkdir -p $TASKDDATA
     taskd init
     cp -r /usr/share/taskd/pki $TASKDDATA
@@ -232,7 +232,7 @@ configure_taskd() {
 
     taskd config --force log $PWD/taskd.log
     taskd config --force pid.file $PWD/taskd.pid
-    taskd config --force server localhost:53589
+    taskd config --force server `hostname -f`:53589
     taskd config
 }
 
