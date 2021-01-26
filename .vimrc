@@ -69,7 +69,6 @@
         Plug 'lervag/vimtex'
         Plug 'LaTeX-Box-Team/LaTeX-Box'
         Plug 'nvie/vim-flake8'
-        Plug 'dense-analysis/ale'
         Plug 'mileszs/ack.vim'
         Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 
@@ -481,15 +480,6 @@
         let g:ackprg = 'ag --nogroup --nocolor --column'
     " }
 
-    " ale {
-        nmap <F10> :ALEFix<CR>
-        let g:ale_fix_on_save = 0
-        let g:ale_lint_on_text_changed = 'never'
-        let g:ale_lint_on_insert_leave = 0
-        " You can disable this option too
-        " if you don't want linters to run on opening a file
-        let g:ale_lint_on_enter = 0
-    " }
     " Ultisnips {
         if isdirectory(expand("~/.vim/my_snippets/"))
             let g:UltiSnipsSnippetDirectories=["~/.vim/my_snippets/"]
