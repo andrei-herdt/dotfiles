@@ -56,6 +56,7 @@ install_scripts() {
     echo "install shell scripts"
     sudo cp bin/viag.sh /usr/local/bin/
     sudo cp bin/vifn.sh /usr/local/bin/
+    sudo cp bin/vpn.sh /usr/local/bin/
 }
 
 install_oh_my_zsh() {

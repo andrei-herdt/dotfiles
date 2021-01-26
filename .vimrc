@@ -459,7 +459,7 @@
 
     " Clang Format {
             augroup clangFMT
-                autocmd FileType cpp let g:clang_format#auto_format = 0
+                autocmd FileType cpp let g:clang_format#auto_format = 1
                 autocmd FileType c let g:clang_format#auto_format = 0
             augroup END
     " }
