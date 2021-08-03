@@ -139,6 +139,7 @@ tickle () {
 alias tick=tickle
 alias think='tickle +1d'
 alias rnd='task add +rnd'
+alias p='task proj:$1'
 
 webpage_title (){
     wget -qO- "$*" | hxselect -s '\n' -c  'title' 2>/dev/null
@@ -159,3 +160,8 @@ alias rnr=read_and_review
 [[ -s /home/andrei/.autojump/etc/profile.d/autojump.sh ]] && source /home/andrei/.autojump/etc/profile.d/autojump.sh
 
 autoload -U compinit && compinit -u
+
+dockerexec (){
+    docker exec -it $1 /bin/zsh
+}
+alias dex=dockerexec
