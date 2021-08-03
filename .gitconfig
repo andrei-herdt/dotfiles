@@ -1,6 +1,6 @@
 [user]
 	name = Andrei Herdt
-	email = andrei.herdt@tra.ai
+	email = andrei.herdt@arrival.com
 [remote "origin"]
 	prune = true
 [filter "lfs"]

@@ -13,7 +13,6 @@ clang-format
 clang-tidy
 cmake
 curl
-dconf-cli
 exuberant-ctags
 git
 python-dev
@@ -21,13 +20,10 @@ python3-dev
 rsync
 tmux
 tree
-vim-gnome
 neovim
 xsel
 zsh
 taskwarrior
-taskd
-bugwarrior
 silversearcher-ag
 redshift
 htop
@@ -38,12 +34,11 @@ terminator
 meld
 parallel
 xclip
-python-pip
-gnome-tweak-tool
 vifm
 rename
 zathura
 gitk
+tig
 )
 
 sudo apt update
@@ -137,6 +132,7 @@ install_autojump() {
     git clone https://github.com/wting/autojump.git
     cd autojump
     ./install.py
+    echo "[[ -s /home/andrei/.autojump/etc/profile.d/autojump.sh ]] && source /home/andrei/.autojump/etc/profile.d/autojump.sh" >> ~/.bashrc
     rm -rf $DIR
 }
 
@@ -146,8 +142,10 @@ install_gdbgui() {
 
 configure_vim() {
     echo configure vim
+    DIR=$PWD
+    echo $DIR
 
-    cd "$(dirname "${BASH_SOURCE}")";
+    cd $DIR;
     cp .vimrc ~
     cp .ycm_extra_conf.py ~
     cp -r .vimcache ~
@@ -165,6 +163,7 @@ configure_vim() {
     ./install.py --clang-completer
 
     # copy custom snippets
+    cd $DIR
     cp -r my_snippets ~/.vim/
 }
 
@@ -219,6 +218,7 @@ configure_taskd() {
     cp -r /usr/share/taskd/pki $TASKDDATA
     cd "$(dirname "${BASH_SOURCE}")";
     cp vars $TASKDDATA/pki/
+    rm vars
     cd $TASKDDATA/pki/
     echo "CN=`hostname -f`" >> vars
     ./generate
@@ -237,6 +237,13 @@ configure_taskd() {
     taskd config
 }
 
+configure_keyboard() {
+    echo configure keyboard
+
+    cd "$(dirname "${BASH_SOURCE}")";
+    sudo cp keyboard /etc/default/
+}
+
 IFS=', '
 read -p "Choose your option(s)
 install
@@ -252,7 +259,8 @@ configure
     15)  vifm
     16)  taskwarrior
     17)  taskd
-    18)  all
+    18)  keyboard
+    100)  all
 > " -a array
 
 for choice in "${array[@]}"; do
@@ -297,6 +305,9 @@ for choice in "${array[@]}"; do
             configure_taskd
             ;;
         18)
+            configure_keyboard
+            ;;
+        100)
             configure_vim
             configure_vifm
             configure_tmux
