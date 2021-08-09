@@ -39,6 +39,10 @@ rename
 zathura
 gitk
 tig
+openvpn
+network-manager-openvpn
+network-manager-openvpn-gnome
+git-lfs
 )
 
 sudo apt update
