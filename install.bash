@@ -55,8 +55,8 @@ network-manager-openvpn-gnome
 git-lfs
 )
 
-brew update
-echo ${packages[*]} | xargs brew install 
+sudo apt update
+echo ${packages[*]} | xargs sudo apt install --assume-yes
 unset packages;
 
 }
