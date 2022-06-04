@@ -7,7 +7,7 @@ exists() {
 install_brew_packages() {
 echo install some basic command line utilities using brew
 
-brew_packages="clang-format curl git python3 rsync tmux tree neovim xsel zsh the_silver_searcher htop openssh parallel xclip vifm rename tig"
+brew_packages="cmake wget clang-format curl git python3 rsync tmux tree neovim xsel zsh the_silver_searcher htop openssh parallel xclip vifm rename tig"
 
 brew update
 brew install $brew_packages
