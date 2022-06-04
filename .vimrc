@@ -66,6 +66,7 @@
         Plug 'google/vim-maktaba'
         Plug 'lervag/vimtex'
         Plug 'LaTeX-Box-Team/LaTeX-Box'
+        Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
         call plug#end()
     endif
@@ -448,6 +449,8 @@
         if isdirectory(expand("~/.vim/plugged/vim-airline-themes/"))
             let g:airline_theme = 'solarized'
             let g:airline_powerline_fonts = 1
+            let g:airline#extensions#tabline#enabled = 1
+            let g:airline#extensions#tabline#formatter = 'unique_tail'
         endif
     " }
 
@@ -568,4 +571,5 @@
 " }
 
 au BufNewFile,BufRead *.py set foldmethod=indent
+
 set foldnestmax=1
