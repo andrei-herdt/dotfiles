@@ -64,13 +64,8 @@
         Plug 'vim-scripts/matchit.zip'          " Improve % operation
         Plug 'godlygeek/tabular'                " Text alignment
         Plug 'google/vim-maktaba'
-        Plug 'bazelbuild/vim-bazel'
-        Plug 'blindFS/vim-taskwarrior'
         Plug 'lervag/vimtex'
         Plug 'LaTeX-Box-Team/LaTeX-Box'
-        Plug 'nvie/vim-flake8'
-        Plug 'mileszs/ack.vim'
-        Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 
         call plug#end()
     endif
