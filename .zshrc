@@ -127,37 +127,14 @@ zle -N zle-line-init
 zle -N zle-line-finish
 zle -N zle-keymap-select
 
-# taskwarrior
-alias in='task add +in'
-alias today='task add +today'
-export PS1='$(task +in +PENDING count) '$PS1
-tickle () {
-    deadline=$1
-    shift
-    in +tickle wait:$deadline $@
-}
-alias tick=tickle
-alias think='tickle +1d'
-alias rnd='task add +rnd'
-alias p='task proj:$1'
-
 webpage_title (){
     wget -qO- "$*" | hxselect -s '\n' -c  'title' 2>/dev/null
-}
-
-read_and_review (){
-    link="$1"
-    title=$link
-    echo $title
-    descr="\"Read and review: $title\""
-    id=$(task add +next +rnr "$descr" | sed -n 's/Created task \(.*\)./\1/p')
-    task "$id" annotate "$link"
 }
 
 alias rnr=read_and_review
 
 # autojump
-[[ -s /home/andrei/.autojump/etc/profile.d/autojump.sh ]] && source /home/andrei/.autojump/etc/profile.d/autojump.sh
+[[ -s ~/.autojump/etc/profile.d/autojump.sh ]] && source ~/.autojump/etc/profile.d/autojump.sh
 
 autoload -U compinit && compinit -u
 

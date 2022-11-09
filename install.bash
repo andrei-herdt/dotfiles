@@ -33,7 +33,6 @@ tree
 neovim
 xsel
 zsh
-taskwarrior
 silversearcher-ag
 redshift
 htop
@@ -216,41 +215,6 @@ configure_zsh() {
     cp .zshrc ~
 }
 
-configure_taskwarrior() {
-    echo configure taskwarrior
-
-    cd "$(dirname "${BASH_SOURCE}")";
-    cp .taskrc ~
-
-}
-
-configure_taskd() {
-    echo configure taskd
-    export TASKDDATA=/var/taskd/
-    mkdir -p $TASKDDATA
-    taskd init
-    cp -r /usr/share/taskd/pki $TASKDDATA
-    cd "$(dirname "${BASH_SOURCE}")";
-    cp vars $TASKDDATA/pki/
-    rm vars
-    cd $TASKDDATA/pki/
-    echo "CN=`hostname -f`" >> vars
-    ./generate
-    cp *.pem $TASKDDATA
-
-    taskd config --force client.cert $TASKDDATA/client.cert.pem
-    taskd config --force client.key  $TASKDDATA/client.key.pem
-    taskd config --force server.cert $TASKDDATA/server.cert.pem
-    taskd config --force server.key  $TASKDDATA/server.key.pem
-    taskd config --force server.crl  $TASKDDATA/server.crl.pem
-    taskd config --force ca.cert     $TASKDDATA/ca.cert.pem
-
-    taskd config --force log $PWD/taskd.log
-    taskd config --force pid.file $PWD/taskd.pid
-    taskd config --force server `hostname -f`:53589
-    taskd config
-}
-
 configure_keyboard() {
     echo configure keyboard
 
@@ -271,8 +235,6 @@ configure
     13)  zsh
     14)  color scheme
     15)  vifm
-    16)  taskwarrior
-    17)  taskd
     18)  keyboard
     19) brew packages
     100)  all
@@ -312,12 +274,6 @@ for choice in "${array[@]}"; do
             ;;
         15)
             configure_vifm
-            ;;
-        16)
-            configure_taskwarrior
-            ;;
-        17)
-            configure_taskd
             ;;
         18)
             configure_keyboard
