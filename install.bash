@@ -215,13 +215,6 @@ configure_zsh() {
     cp .zshrc ~
 }
 
-configure_keyboard() {
-    echo configure keyboard
-
-    cd "$(dirname "${BASH_SOURCE}")";
-    sudo cp keyboard /etc/default/
-}
-
 IFS=', '
 read -p "Choose your option(s)
 install
@@ -235,7 +228,6 @@ configure
     13)  zsh
     14)  color scheme
     15)  vifm
-    18)  keyboard
     19) brew packages
     100)  all
 > " -a array
@@ -274,9 +266,6 @@ for choice in "${array[@]}"; do
             ;;
         15)
             configure_vifm
-            ;;
-        18)
-            configure_keyboard
             ;;
         19)
             install_brew_packages
