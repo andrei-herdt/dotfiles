@@ -65,7 +65,6 @@
         Plug 'godlygeek/tabular'                " Text alignment
         Plug 'google/vim-maktaba'
         Plug 'lervag/vimtex'
-        Plug 'LaTeX-Box-Team/LaTeX-Box'
         Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
         call plug#end()
