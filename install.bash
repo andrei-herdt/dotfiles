@@ -128,16 +128,6 @@ install_googler() {
     rm -rf $DIR
 }
 
-install_google_chrome() {
-    DIR=/tmp/google_chrome
-    mkdir -p $DIR
-    cd $DIR
-    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-    sudo dpkg -i google-chrome-stable_current_amd64.deb
-    cd
-    rm -rf $DIR
-}
-
 install_autojump() {
     DIR=/tmp/autojump
     mkdir -p $DIR
@@ -147,10 +137,6 @@ install_autojump() {
     ./install.py
     echo "[[ -s /home/andrei/.autojump/etc/profile.d/autojump.sh ]] && source /home/andrei/.autojump/etc/profile.d/autojump.sh" >> ~/.bashrc
     rm -rf $DIR
-}
-
-install_gdbgui() {
-    pip install gdbgui
 }
 
 configure_vim() {
@@ -243,7 +229,6 @@ for choice in "${array[@]}"; do
             install_fzf
             install_googler
             install_google_chrome
-            install_gdbgui
             install_autojump
             ;;
         3)
