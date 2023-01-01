@@ -30,8 +30,8 @@
         if empty(glob("~/.fonts/PowerlineSymbols.otf"))
             echo "Installing powerline symbols..\n"
             silent !mkdir -p ~/.fonts
-            execute 'silent !wget -q -P ~/.fonts/ "https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf"'
-            execute 'silent !fc-cache -vf'
+            execute 'silent !wget --no-check-certificate -P ~/.fonts/ "https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf"'
+            execute 'silent !fc-cache -f'
 
             silent !mkdir -p ~/.config/fontconfig/conf.d
             execute 'silent !wget -q -P ~/.config/fontconfig/conf.d/ "https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf"'
@@ -50,13 +50,12 @@
         Plug 'michaeljsmith/vim-indent-object'  " Indent object
         Plug 'rhysd/vim-clang-format', { 'for': 'cpp' }         " c++ formatting
         Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }  " File browser sidebar
-        Plug 'sirver/ultisnips' | Plug 'honza/vim-snippets'     " Code snippets
         Plug 'tpope/vim-commentary'             " Code commenting
         Plug 'tpope/vim-fugitive'               " Git in Vim!!
         Plug 'tpope/vim-repeat'                 " Repeatable tpope commands
         Plug 'tpope/vim-surround'               " Parenthesis commands
+        Plug 'tpope/vim-obsession'              " Vim obsession
         Plug 'tpope/vim-unimpaired'             " Pairs of handy bracket mappings
-        Plug 'valloric/youcompleteme'           " Code completion engine!!
         Plug 'vim-airline/vim-airline'          " Statusline
         Plug 'vim-airline/vim-airline-themes'   " Solarized theme for airline
         Plug 'vim-scripts/argtextobj.vim'       " Argument object
@@ -64,8 +63,9 @@
         Plug 'vim-scripts/matchit.zip'          " Improve % operation
         Plug 'godlygeek/tabular'                " Text alignment
         Plug 'google/vim-maktaba'
+        Plug 'bazelbuild/vim-bazel'
         Plug 'lervag/vimtex'
-        Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+        Plug 'LaTeX-Box-Team/LaTeX-Box'
 
         call plug#end()
     endif
@@ -448,8 +448,6 @@
         if isdirectory(expand("~/.vim/plugged/vim-airline-themes/"))
             let g:airline_theme = 'solarized'
             let g:airline_powerline_fonts = 1
-            let g:airline#extensions#tabline#enabled = 1
-            let g:airline#extensions#tabline#formatter = 'unique_tail'
         endif
     " }
 
@@ -570,5 +568,4 @@
 " }
 
 au BufNewFile,BufRead *.py set foldmethod=indent
-
 set foldnestmax=1
