@@ -139,6 +139,24 @@ install_autojump() {
     rm -rf $DIR
 }
 
+install_docker() {
+    sudo apt-get update
+    sudo apt-get install ca-certificates curl gnupg
+
+    sudo install -m 0755 -d /etc/apt/keyrings
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+    sudo chmod a+r /etc/apt/keyrings/docker.gpg
+
+    echo \
+          "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+            "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+              sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+    sudo apt-get update
+
+    sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+}
+
 configure_vim() {
     echo configure vim
     DIR=$PWD
@@ -207,6 +225,7 @@ install
     1) apt packages
     2) other packages
     3) scripts
+    4) docker
 configure
     10)  vim
     11)  tmux
@@ -230,9 +249,13 @@ for choice in "${array[@]}"; do
             install_googler
             install_google_chrome
             install_autojump
+            install_docker
             ;;
         3)
             install_scripts
+            ;;
+        4)
+            install_docker
             ;;
         10)
             configure_vim
