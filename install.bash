@@ -30,7 +30,6 @@ python3-dev
 rsync
 tmux
 tree
-neovim
 xsel
 zsh
 silversearcher-ag
@@ -157,6 +156,14 @@ install_docker() {
     sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 }
 
+install_neovim() {
+    CUSTOM_NVIM_PATH=/usr/local/bin/nvim.appimage
+    sudo curl -o ${CUSTOM_NVIM_PATH} -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+    sudo chmod a+x ${CUSTOM_NVIM_PATH}
+    set -u
+    sudo update-alternatives --install /usr/bin/nvim nvim "${CUSTOM_NVIM_PATH}" 110
+}
+
 configure_vim() {
     echo configure vim
     DIR=$PWD
@@ -250,6 +257,7 @@ for choice in "${array[@]}"; do
             install_google_chrome
             install_autojump
             install_docker
+            install_neovim
             ;;
         3)
             install_scripts
