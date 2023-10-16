@@ -51,8 +51,8 @@ install_packages() {
 		network-manager-openvpn
 		network-manager-openvpn-gnome
 		git-lfs
-    nodejs
-    npm
+		nodejs
+		npm
 	)
 
 	sudo apt update
@@ -174,7 +174,7 @@ install_lazygit() {
 }
 
 install_rust() {
-    curl https://sh.rustup.rs -sSf | sh
+	curl https://sh.rustup.rs -sSf | sh
 }
 
 configure_vim() {
@@ -272,7 +272,7 @@ for choice in "${array[@]}"; do
 		install_docker
 		install_neovim
 		install_lazygit
-        install_rust
+		install_rust
 		;;
 	3)
 		install_scripts
