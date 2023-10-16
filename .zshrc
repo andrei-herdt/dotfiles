@@ -92,8 +92,6 @@ export KEYTIMEOUT=1
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-source ~/.fzf.zsh
-
 # {{{1 vi mode cursor indicator
 function zle-keymap-select zle-line-init
 {
@@ -142,3 +140,5 @@ dockerexec (){
     docker exec -it $1 /bin/zsh
 }
 alias dex=dockerexec
+
+alias p=python3
