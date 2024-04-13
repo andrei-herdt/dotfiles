@@ -51,7 +51,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(vi-mode git z ssh-agent)
+plugins=(vi-mode git ssh-agent fzf)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -140,3 +140,9 @@ dockerexec (){
 alias dex=dockerexec
 
 alias p=python3
+
+# Start ssh-agent and add key
+if [ -z "$SSH_AUTH_SOCK" ] ; then
+  eval "$(ssh-agent -s)"
+  ssh-add ~/.ssh/id_rsa
+fi
