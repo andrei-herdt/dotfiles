@@ -2,9 +2,12 @@ extends c
 snippet scout
 	std::cout << "${1}" << std::endl;
 endsnippet
-snippet Cout
-	std::cout << "$1:" << ${1} << std::endl;
+snippet scouth
+	std::cout << "here_${1}" << std::endl;
 endsnippet
-snippet CoutV
-	std::cout << "$1:" << ${1}.transpose() << std::endl;
+snippet Cout
+	std::cout << "$1:" << std::endl << ${1} << std::endl;
+endsnippet
+snippet Coutv
+	std::cout << "$1:" << std::endl << ${1}.transpose() << std::endl;
 endsnippet
