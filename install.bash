@@ -4,10 +4,29 @@ exists() {
 	command -v $1 >/dev/null 2>&1
 }
 
+install_homebrew() {
+	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+	(
+		echo
+		echo 'eval "$(/opt/homebrew/bin/brew shellenv)"'
+	) >>~/.zprofile
+	eval "$(/opt/homebrew/bin/brew shellenv)"
+}
+
 install_brew_packages() {
 	echo install some basic command line utilities using brew
 
 	brew_packages="cmake wget clang-format curl git python3 rsync tmux tree neovim xsel zsh the_silver_searcher htop openssh parallel xclip vifm rename tig"
+
+	brew update
+	brew install $brew_packages
+	unset brew_packages
+}
+
+install_essential_brew_packages() {
+	echo install some basic command line utilities using brew
+
+	brew_packages="wget curl git python3 rsync tmux tree neovim xsel zsh the_silver_searcher htop openssh xclip vifm rename tig lazygit fzf"
 
 	brew update
 	brew install $brew_packages
@@ -254,6 +273,8 @@ configure
     14)  color scheme
     15)  vifm
     19) brew packages
+    20) homebrew
+    21) essential brew packages
     100)  all
 > " -a array
 
@@ -300,6 +321,12 @@ for choice in "${array[@]}"; do
 		;;
 	19)
 		install_brew_packages
+		;;
+	20)
+		install_homebrew
+		;;
+	21)
+		install_essential_brew_packages
 		;;
 	100)
 		configure_vim
