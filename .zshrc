@@ -183,6 +183,4 @@ _fzf_comprun() {
 # [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 # source ~/powerlevel10k/powerlevel10k.zsh-theme
 
-ource ~/.aprc
-
 export PATH="$HOME/.local/bin:$PATH"
