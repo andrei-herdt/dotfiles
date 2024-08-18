@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# TODO: Add install_productivity_terminal_tools
+
 exists() {
   command -v $1 >/dev/null 2>&1
 }
