@@ -90,6 +90,7 @@ alias zshconfig="vi ~/.zshrc"
 alias vimconfig="vi ~/.vimrc"
 alias fn='find . -name'
 alias viag='/usr/local/bin/viag.sh'
+alias lg='lazygit'
 
 export PATH="/usr/lib/ccache:$PATH"
 
