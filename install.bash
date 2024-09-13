@@ -18,7 +18,7 @@ install_homebrew() {
 install_brew_packages() {
   echo install some basic command line utilities using brew
 
-  brew_packages="cmake wget clang-format curl git python3 rsync tmux tree neovim xsel zsh the_silver_searcher htop openssh parallel xclip vifm rename tig"
+  brew_packages="cmake wget clang-format curl git python3 rsync tmux tree neovim xsel zsh the_silver_searcher htop openssh parallel xclip vifm rename "
 
   brew update
   brew install $brew_packages
@@ -28,7 +28,7 @@ install_brew_packages() {
 install_essential_brew_packages() {
   echo install some basic command line utilities using brew
 
-  brew_packages="wget curl git python3 rsync tmux tree neovim xsel zsh the_silver_searcher htop openssh xclip vifm rename tig lazygit fzf"
+  brew_packages="wget curl git python3 rsync tmux tree neovim xsel zsh the_silver_searcher htop openssh xclip vifm rename lazygit fzf"
 
   brew update
   brew install $brew_packages
@@ -57,11 +57,11 @@ install_essential_packages() {
     xclip
     vifm
     zathura
-    tig
     openvpn
     network-manager-openvpn
     network-manager-openvpn-gnome
     git-lfs
+    ripgrep
   )
 
   sudo apt update
