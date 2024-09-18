@@ -28,7 +28,7 @@ install_brew_packages() {
 install_essential_brew_packages() {
   echo install some basic command line utilities using brew
 
-  brew_packages="wget curl git python3 rsync tmux tree neovim xsel zsh the_silver_searcher htop openssh xclip vifm rename lazygit fzf"
+  brew_packages="wget curl git python3 rsync tmux tree neovim xsel zsh the_silver_searcher htop openssh xclip vifm rename lazygit fzf ssh-askpass"
 
   brew update
   brew install $brew_packages
