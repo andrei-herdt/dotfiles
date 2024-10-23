@@ -42,6 +42,7 @@ install_essential_packages() {
     curl
     git
     python3-dev
+    pip
     rsync
     tmux
     tree
