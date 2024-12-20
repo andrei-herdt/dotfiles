@@ -15,6 +15,14 @@ install_homebrew() {
   eval "$(/opt/homebrew/bin/brew shellenv)"
 }
 
+setup_neovim() {
+  mkdir -p ~/.config/
+
+  cd ~/.config
+
+  git clone https://github.com/andrei-herdt/neovim-config.git nvim
+}
+
 install_brew_packages() {
   echo install some basic command line utilities using brew
 
@@ -25,14 +33,17 @@ install_brew_packages() {
   unset brew_packages
 }
 
-install_essential_brew_packages() {
+install_essential_macos_packages() {
   echo install some basic command line utilities using brew
 
-  brew_packages="wget curl git python3 rsync tmux tree neovim xsel zsh the_silver_searcher htop openssh xclip vifm rename lazygit fzf ssh-askpass"
+  brew_packages="wget curl git python3 rsync tmux tree neovim xsel zsh the_silver_searcher htop openssh xclip vifm rename lazygit fzf sshpass git-lfs alacritty"
 
   brew update
   brew install $brew_packages
   unset brew_packages
+
+  echo "rustup"
+  curl https://sh.rustup.rs -sSf | sh
 }
 
 install_essential_packages() {
@@ -315,7 +326,8 @@ configure
     15)  vifm
     19) brew packages
     20) homebrew
-    21) essential brew packages
+    21) essential macos packages
+    22) setup neovim
     100)  all
 > " -a array
 
@@ -369,7 +381,10 @@ for choice in "${array[@]}"; do
     install_homebrew
     ;;
   21)
-    install_essential_brew_packages
+    install_essential_macos_packages
+    ;;
+  22)
+    setup_neovim
     ;;
   100)
     configure_vim
