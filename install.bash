@@ -26,7 +26,7 @@ setup_neovim() {
 install_brew_packages() {
   echo install some basic command line utilities using brew
 
-  brew_packages="cmake wget clang-format curl git python3 rsync tmux tree neovim xsel zsh the_silver_searcher htop openssh parallel xclip vifm rename "
+  brew_packages="cmake wget clang-format curl git python3 rsync tmux tree neovim xsel zsh the_silver_searcher htop openssh parallel xclip vifm yazi rename "
 
   brew update
   brew install $brew_packages
@@ -36,7 +36,7 @@ install_brew_packages() {
 install_essential_macos_packages() {
   echo install some basic command line utilities using brew
 
-  brew_packages="wget curl git python3 rsync tmux tree neovim xsel zsh the_silver_searcher htop openssh xclip vifm rename lazygit fzf sshpass git-lfs alacritty"
+  brew_packages="wget curl git python3 rsync tmux tree neovim xsel zsh the_silver_searcher htop openssh xclip vifm yazi rename lazygit fzf sshpass git-lfs ghostty zellij"
 
   brew update
   brew install $brew_packages
@@ -68,6 +68,7 @@ install_essential_packages() {
     bat
     xclip
     vifm
+    yazi
     zathura
     openvpn
     network-manager-openvpn
@@ -111,6 +112,7 @@ install_packages() {
     parallel
     xclip
     vifm
+    yazi
     rename
     zathura
     gitk
