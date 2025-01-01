@@ -91,6 +91,8 @@ alias vimconfig="vi ~/.vimrc"
 alias fn='find . -name'
 alias viag='/usr/local/bin/viag.sh'
 alias lg='lazygit'
+alias vi='nvim'
+alias z='zellij a -c'
 
 export PATH="/usr/lib/ccache:$PATH"
 
