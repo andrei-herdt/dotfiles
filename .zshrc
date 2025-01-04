@@ -187,3 +187,4 @@ _fzf_comprun() {
 # source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 export PATH="$HOME/.local/bin:$PATH"
+export TERM=xterm
