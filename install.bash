@@ -330,6 +330,7 @@ configure
     20) homebrew
     21) essential macos packages
     22) setup neovim
+    23) oh_my_zsh
     100)  all
 > " -a array
 
@@ -387,6 +388,9 @@ for choice in "${array[@]}"; do
     ;;
   22)
     setup_neovim
+    ;;
+  23)
+    install_oh_my_zsh
     ;;
   100)
     configure_vim

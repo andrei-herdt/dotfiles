@@ -141,6 +141,7 @@ alias rnr=read_and_review
 
 # autojump
 [[ -s ~/.autojump/etc/profile.d/autojump.sh ]] && source ~/.autojump/etc/profile.d/autojump.sh
+[[ -f /opt/homebrew/etc/profile.d/autojump.sh ]] && . /opt/homebrew/etc/profile.d/autojump.sh
 
 autoload -U compinit && compinit -u
 
