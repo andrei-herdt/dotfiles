@@ -190,7 +190,6 @@ _fzf_comprun() {
 export PATH="$HOME/.local/bin:$PATH"
 export TERM=xterm
 
-alias fix="vi `git diff --name-only | uniq`"
 
 fix() {
   vi $(git diff --name-only | uniq)
