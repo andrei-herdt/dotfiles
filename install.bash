@@ -230,7 +230,7 @@ install_docker() {
 
 install_neovim() {
   CUSTOM_NVIM_PATH=/usr/local/bin/nvim.appimage
-  sudo curl -o ${CUSTOM_NVIM_PATH} -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+  sudo curl -o ${CUSTOM_NVIM_PATH} -LO https://github.com/neovim/neovim/releases/download/v0.11.3/nvim-linux-x86_64.appimage
   sudo chmod a+x ${CUSTOM_NVIM_PATH}
   set -u
   sudo update-alternatives --install /usr/bin/nvim nvim "${CUSTOM_NVIM_PATH}" 110
