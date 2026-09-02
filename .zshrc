@@ -94,6 +94,7 @@ alias lg='lazygit'
 alias vi='nvim'
 alias z='zellij'
 alias y='yazi'
+alias st='ssh andrei@andrei-thinkpad-t490s'
 
 export PATH="/usr/lib/ccache:$PATH"
 
