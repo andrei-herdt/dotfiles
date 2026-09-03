@@ -138,6 +138,17 @@ install_scripts() {
   sudo cp bin/viag.sh /usr/local/bin/
   sudo cp bin/vifn.sh /usr/local/bin/
   sudo cp bin/vpn.sh /usr/local/bin/
+
+  # per-user, no sudo: needs to write ~/.local/state/theme-mode
+  mkdir -p ~/.local/bin
+  cp bin/theme ~/.local/bin/
+  chmod +x ~/.local/bin/theme
+}
+
+configure_ghostty() {
+  echo "configure ghostty"
+  mkdir -p ~/Library/Application\ Support/com.mitchellh.ghostty
+  cp ghostty/config.ghostty ~/Library/Application\ Support/com.mitchellh.ghostty/config.ghostty
 }
 
 install_oh_my_zsh() {
@@ -337,6 +348,7 @@ configure
     13)  zsh
     14)  color scheme
     15)  vifm
+    16)  ghostty
     19) brew packages
     20) homebrew
     21) essential macos packages
@@ -389,6 +401,9 @@ for choice in "${array[@]}"; do
   15)
     configure_vifm
     ;;
+  16)
+    configure_ghostty
+    ;;
   19)
     install_brew_packages
     ;;
@@ -411,6 +426,7 @@ for choice in "${array[@]}"; do
     configure_git
     configure_zsh
     configure_color_scheme
+    configure_ghostty
     ;;
   *)
     echo invalid number

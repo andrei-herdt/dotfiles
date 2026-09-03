@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+# Toggle/set dark-light theme across macOS, Ghostty, zellij, and neovim.
+set -euo pipefail
+
+STATE_FILE="$HOME/.local/state/theme-mode"
+SOCK_DIR="/tmp/nvim-theme-sockets"
+mkdir -p "$(dirname "$STATE_FILE")"
+
+current="light"
+[ -f "$STATE_FILE" ] && current="$(cat "$STATE_FILE")"
+
+case "${1:-toggle}" in
+  dark|light) mode="$1" ;;
+  toggle)
+    if [ "$current" = "dark" ]; then mode="light"; else mode="dark"; fi
+    ;;
+  *)
+    echo "usage: theme [dark|light|toggle]" >&2
+    exit 1
+    ;;
+esac
+
+echo -n "$mode" > "$STATE_FILE"
+
+# macOS appearance -- Ghostty follows automatically via its
+# `theme = light:...,dark:...` config.
+dark_bool=false
+[ "$mode" = "dark" ] && dark_bool=true
+osascript -e "tell application \"System Events\" to tell appearance preferences to set dark mode to $dark_bool" >/dev/null
+
+# zellij: flip every running session live.
+if command -v zellij >/dev/null 2>&1; then
+  while IFS= read -r session; do
+    [ -z "$session" ] && continue
+    zellij --session "$session" action "set-${mode}-theme" 2>/dev/null || true
+  done < <(zellij list-sessions -s -n 2>/dev/null)
+fi
+
+# neovim: flip every running instance live via its control socket.
+if [ -d "$SOCK_DIR" ]; then
+  for sock in "$SOCK_DIR"/*.sock; do
+    [ -S "$sock" ] || continue
+    nvim --server "$sock" --remote-send "<Cmd>lua require('config.theme').set('${mode}')<CR>" 2>/dev/null || true
+  done
+fi
+
+echo "theme -> $mode"

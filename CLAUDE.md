@@ -4,7 +4,7 @@ Instructions for an agent setting up this environment on a new machine.
 
 ## What this repo is
 
-Personal dotfiles for zsh, tmux, zellij, and git. `install.bash` is an
+Personal dotfiles for zsh, tmux, zellij, ghostty, and git. `install.bash` is an
 interactive menu script that `cp`s files from this repo into `$HOME` —
 **there is no symlinking**. Once copied, the live file and the repo file
 are independent; changes made on a machine after install do not
@@ -66,6 +66,28 @@ part of this one.
    mkdir -p ~/.config/zellij
    cp ~/devel/dotfiles/zellij/config.kdl ~/.config/zellij/config.kdl
    ```
+
+6. **Ghostty config**: `./install.bash` option `16` (`configure_ghostty`,
+   included in `100`) copies `ghostty/config.ghostty` to
+   `~/Library/Application Support/com.mitchellh.ghostty/config.ghostty`
+   (Ghostty's macOS-native config path; it takes precedence over the XDG
+   `~/.config/ghostty/` path if both exist). Only `theme` is set today —
+   `light:TokyoNight Day,dark:TokyoNight Night`, so Ghostty follows macOS
+   appearance.
+
+7. **`theme` script**: `./install.bash` option `3` (`install_scripts`)
+   installs `bin/theme` to `~/.local/bin/theme` (no sudo — it needs to
+   write `~/.local/state/theme-mode` in `$HOME`, unlike the other `bin/`
+   scripts which go to `/usr/local/bin`). Run `theme [dark|light|toggle]`
+   to flip macOS appearance, Ghostty (via the config above), zellij (via
+   `theme_dark`/`theme_light` in `zellij/config.kdl`, applied live through
+   `zellij action set-dark-theme`/`set-light-theme`), and any running
+   Neovim instance that has loaded `neovim-config`'s
+   `lua/config/theme.lua` (it opens a control socket under
+   `/tmp/nvim-theme-sockets/`; the script broadcasts to all of them).
+   Caveat: zellij only picks up `theme_dark`/`theme_light` at session
+   start, so an already-running session needs to be restarted once after
+   the config changes before `theme` affects it live.
 
 ## Things to never do
 
