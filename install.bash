@@ -36,11 +36,13 @@ install_brew_packages() {
 install_essential_macos_packages() {
   echo install some basic command line utilities using brew
 
-  brew_packages="wget curl git python3 rsync tmux tree neovim xsel zsh the_silver_searcher htop openssh xclip vifm yazi rename lazygit fzf sshpass git-lfs ghostty zellij"
+  brew_packages="wget curl git python3 rsync tmux tree neovim xsel zsh the_silver_searcher htop openssh xclip vifm yazi rename lazygit fzf sshpass git-lfs zellij"
 
   brew update
   brew install $brew_packages
   unset brew_packages
+
+  brew install --cask ghostty
 
   echo "rustup"
   curl https://sh.rustup.rs -sSf | sh
