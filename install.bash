@@ -141,8 +141,13 @@ install_scripts() {
 }
 
 install_oh_my_zsh() {
+  if [ -d ~/.oh-my-zsh ]; then
+    echo "oh my zsh already installed, skipping"
+    return
+  fi
+
   echo "install oh my zsh"
-  sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+  RUNZSH=no CHSH=no KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 }
 
 install_powerline_symbols() {
@@ -314,7 +319,11 @@ configure_zsh() {
 }
 
 IFS=', '
-read -p "Choose your option(s)
+if [ -n "$1" ]; then
+  # non-interactive: ./install.bash "5,11,13,12"
+  array=($1)
+else
+  read -p "Choose your option(s)
 install
     1) apt packages
     2) other packages
@@ -335,6 +344,7 @@ configure
     23) oh_my_zsh
     100)  all
 > " -a array
+fi
 
 for choice in "${array[@]}"; do
   case "$choice" in
