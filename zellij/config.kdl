@@ -190,8 +190,8 @@ keybinds clear-defaults=true {
         bind "Ctrl l" { MoveFocusOrTab "right"; }
     }
     shared_except "locked" "scroll" "resize" "entersearch" "renametab" "renamepane" {
-        bind "Shift h" { GoToPreviousTab; }
-        bind "Shift l" { GoToNextTab; }
+        bind "Ctrl Shift h" { GoToPreviousTab; }
+        bind "Ctrl Shift l" { GoToNextTab; }
     }
     shared_except "locked" "scroll" "search" "tmux" {
         bind "Ctrl a" { SwitchToMode "tmux"; }
