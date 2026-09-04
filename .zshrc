@@ -95,6 +95,10 @@ alias vi='nvim'
 alias z='zellij'
 alias y='yazi'
 alias st='ssh andrei@andrei-thinkpad-t490s'
+alias c='claude'
+alias cr='claude --resume'
+alias cs='claude --model sonnet'
+alias co='claude --model opus'
 
 export PATH="/usr/lib/ccache:$PATH"
 
