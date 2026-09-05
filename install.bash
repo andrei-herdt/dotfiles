@@ -26,7 +26,7 @@ setup_neovim() {
 install_brew_packages() {
   echo install some basic command line utilities using brew
 
-  brew_packages="cmake wget clang-format curl git python3 rsync tmux tree neovim xsel zsh the_silver_searcher htop openssh parallel xclip vifm yazi rename "
+  brew_packages="cmake wget clang-format curl git python3 rsync tmux tree neovim xsel zsh the_silver_searcher htop openssh parallel xclip vifm yazi rename fd "
 
   brew update
   brew install $brew_packages
@@ -36,7 +36,7 @@ install_brew_packages() {
 install_essential_macos_packages() {
   echo install some basic command line utilities using brew
 
-  brew_packages="wget curl git python3 rsync tmux tree neovim xsel zsh the_silver_searcher htop openssh xclip vifm yazi rename lazygit fzf sshpass git-lfs zellij"
+  brew_packages="wget curl git python3 rsync tmux tree neovim xsel zsh the_silver_searcher htop openssh xclip vifm yazi rename lazygit fzf fd sshpass git-lfs zellij"
 
   brew update
   brew install $brew_packages
