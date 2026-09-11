@@ -5,6 +5,19 @@
 keybinds clear-defaults=true {
     locked {
         bind "Ctrl g" { SwitchToMode "normal"; }
+        bind "Ctrl a" { SwitchToMode "tmux"; }
+        bind "Ctrl h" { MoveFocusOrTab "left"; }
+        bind "Ctrl j" { MoveFocus "down"; }
+        bind "Ctrl k" { MoveFocus "up"; }
+        bind "Ctrl l" { MoveFocusOrTab "right"; }
+        bind "Alt left" { MoveFocusOrTab "left"; }
+        bind "Alt down" { MoveFocus "down"; }
+        bind "Alt up" { MoveFocus "up"; }
+        bind "Alt right" { MoveFocusOrTab "right"; }
+        bind "Ctrl Shift h" { GoToPreviousTab; }
+        bind "Ctrl Shift l" { GoToNextTab; }
+        bind "Alt f" { ToggleFloatingPanes; }
+        bind "Alt n" { NewPane; }
     }
     pane {
         bind "left" { MoveFocus "left"; }
@@ -329,7 +342,7 @@ web_client {
 // Theme to use when the host terminal reports a dark color palette.
 // Requires `theme_light` to also be set; otherwise `theme` is used.
 //
-theme_dark "tokyo-night-dark"
+theme_dark "tokyo-night-focus"
 
 // Theme to use when the host terminal reports a light color palette.
 // Requires `theme_dark` to also be set; otherwise `theme` is used.
@@ -379,14 +392,14 @@ default_mode "normal"
 //   - true (default, enabled)
 //   - false
 //
-pane_frames false
+pane_frames true
  
 // Set the pane frame style when pane_frames is enabled
 // Options:
 //   - full
 //   - titles (default)
 // 
-// pane_frame_style "titles"
+pane_frame_style "full"
  
 // When attaching to an existing session with other users,
 // should the session be mirrored (true)
@@ -668,3 +681,39 @@ stacked_pane_list false
 //   - "off" (do not forward notifications to the host terminal)
 // 
 // host_notification_protocol "auto"
+
+// Tokyo Night Dark, with pane-focus made loud.
+// Zellij cannot tint a pane's background, so focus is signalled by the frame:
+// bright orange around the focused pane, near-invisible grey around the rest.
+themes {
+    tokyo-night-focus {
+        fg "#a9b1d6"
+        bg "#1a1b26"
+        black "#383e5a"
+        red "#f93357"
+        green "#9ece6a"
+        yellow "#e0af68"
+        blue "#7aa2f7"
+        magenta "#bb9af7"
+        cyan "#2ac3de"
+        white "#c0caf5"
+        orange "#ff9e64"
+
+        frame_selected {
+            base 255 158 100
+            background 255 158 100
+            emphasis_0 255 255 255
+            emphasis_1 255 158 100
+            emphasis_2 255 158 100
+            emphasis_3 255 158 100
+        }
+        frame_unselected {
+            base 45 50 70
+            background 45 50 70
+            emphasis_0 45 50 70
+            emphasis_1 45 50 70
+            emphasis_2 45 50 70
+            emphasis_3 45 50 70
+        }
+    }
+}
