@@ -347,7 +347,7 @@ theme_dark "tokyo-night-focus"
 // Theme to use when the host terminal reports a light color palette.
 // Requires `theme_dark` to also be set; otherwise `theme` is used.
 //
-theme_light "tokyo-night-light"
+theme_light "tokyo-night-focus-light"
  
 // Choose the base input mode of zellij.
 // Default: normal
@@ -714,6 +714,36 @@ themes {
             emphasis_1 45 50 70
             emphasis_2 45 50 70
             emphasis_3 45 50 70
+        }
+    }
+    tokyo-night-focus-light {
+        fg "#343b58"
+        bg "#d5d6db"
+        black "#0f0f14"
+        red "#ba4b60"
+        green "#485e30"
+        yellow "#8f5e15"
+        blue "#34548a"
+        magenta "#5a4a78"
+        cyan "#0f4b6e"
+        white "#8289ac"
+        orange "#965027"
+
+        frame_selected {
+            base 179 67 15
+            background 179 67 15
+            emphasis_0 0 0 0
+            emphasis_1 179 67 15
+            emphasis_2 179 67 15
+            emphasis_3 179 67 15
+        }
+        frame_unselected {
+            base 190 192 202
+            background 190 192 202
+            emphasis_0 190 192 202
+            emphasis_1 190 192 202
+            emphasis_2 190 192 202
+            emphasis_3 190 192 202
         }
     }
 }
