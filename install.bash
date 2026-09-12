@@ -339,6 +339,48 @@ configure_zsh() {
   cp .zshrc ~
 }
 
+sync_dotfiles() {
+  echo "sync dotfiles"
+
+  cd "$(dirname "${BASH_SOURCE}")"
+
+  local branch
+  branch="$(git rev-parse --abbrev-ref HEAD)"
+
+  local stashed=0
+  if ! git diff --quiet || ! git diff --cached --quiet; then
+    echo "stashing local changes"
+    git stash push -u -m "sync_dotfiles: autostash $(date +%s)"
+    stashed=1
+  fi
+
+  git fetch origin "$branch"
+  if ! git merge --ff-only "origin/$branch"; then
+    echo "local and remote history diverged, merging"
+    git merge "origin/$branch" --no-edit
+  fi
+
+  if [[ $stashed -eq 1 ]]; then
+    echo "restoring local changes"
+    git stash pop
+  fi
+
+  # Reconfigure with whatever changed. These are all plain "cp repo file
+  # into \$HOME" steps, so safe to always rerun; heavier/install-like
+  # steps (vim, vifm, color scheme) are left out of sync on purpose - run
+  # them by number if you actually use them.
+  configure_tmux
+  configure_git
+  configure_zsh
+  configure_zellij
+
+  if [[ "$(uname -s)" == "Darwin" ]]; then
+    configure_ghostty
+  fi
+
+  echo "sync complete"
+}
+
 # Only run the interactive/dispatch driver below when this script is
 # executed directly (./install.bash), not when it's sourced to reuse a
 # function (e.g. `source install.bash && install_neovim`).
@@ -356,6 +398,7 @@ install
     3) scripts
     4) docker
     5) essential apt packages
+    6) sync (git pull + reconfigure for this OS)
 configure
     10)  vim
     11)  tmux
@@ -398,6 +441,9 @@ for choice in "${array[@]}"; do
     ;;
   5)
     install_essential_packages
+    ;;
+  6)
+    sync_dotfiles
     ;;
   10)
     configure_vim

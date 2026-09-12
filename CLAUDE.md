@@ -94,6 +94,19 @@ part of this one.
    start, so an already-running session needs to be restarted once after
    the config changes before `theme` affects it live.
 
+## Keeping a machine in sync after initial setup
+
+`./install.bash` option `6` (`sync_dotfiles`) is the one-command way to
+pick up changes made on another machine: it stashes any uncommitted local
+edits, fetches and fast-forwards (or merges if history diverged), restores
+the stash, then reruns the lightweight "cp repo file into `$HOME`"
+configure steps — `tmux`, `git`, `zsh`, `zellij`, and (on macOS only)
+`ghostty`. It deliberately skips heavier/install-like steps (`vim`,
+`vifm`, `color scheme`) — run those by number if you actually use them.
+Prefer this over manually `git pull`-ing and re-running individual
+options; the stash/merge dance around a possibly-dirty working tree is
+easy to get wrong by hand.
+
 ## Things to never do
 
 - **Never overwrite `~/.gitconfig`** if it already exists. It's
