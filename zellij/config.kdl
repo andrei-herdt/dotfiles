@@ -5,6 +5,19 @@
 keybinds clear-defaults=true {
     locked {
         bind "Ctrl g" { SwitchToMode "normal"; }
+        bind "Ctrl a" { SwitchToMode "tmux"; }
+        bind "Ctrl h" { MoveFocusOrTab "left"; }
+        bind "Ctrl j" { MoveFocus "down"; }
+        bind "Ctrl k" { MoveFocus "up"; }
+        bind "Ctrl l" { MoveFocusOrTab "right"; }
+        bind "Alt left" { MoveFocusOrTab "left"; }
+        bind "Alt down" { MoveFocus "down"; }
+        bind "Alt up" { MoveFocus "up"; }
+        bind "Alt right" { MoveFocusOrTab "right"; }
+        bind "Ctrl Shift h" { GoToPreviousTab; }
+        bind "Ctrl Shift l" { GoToNextTab; }
+        bind "Alt f" { ToggleFloatingPanes; }
+        bind "Alt n" { NewPane; }
     }
     pane {
         bind "left" { MoveFocus "left"; }
@@ -329,12 +342,12 @@ web_client {
 // Theme to use when the host terminal reports a dark color palette.
 // Requires `theme_light` to also be set; otherwise `theme` is used.
 //
-theme_dark "tokyo-night-dark"
+theme_dark "tokyo-night-focus"
 
 // Theme to use when the host terminal reports a light color palette.
 // Requires `theme_dark` to also be set; otherwise `theme` is used.
 //
-theme_light "tokyo-night-light"
+theme_light "tokyo-night-focus-light"
  
 // Choose the base input mode of zellij.
 // Default: normal
@@ -379,14 +392,14 @@ default_mode "normal"
 //   - true (default, enabled)
 //   - false
 //
-pane_frames false
+pane_frames true
  
 // Set the pane frame style when pane_frames is enabled
 // Options:
 //   - full
 //   - titles (default)
 // 
-// pane_frame_style "titles"
+pane_frame_style "full"
  
 // When attaching to an existing session with other users,
 // should the session be mirrored (true)
@@ -674,3 +687,85 @@ stacked_pane_list false
 //   - "off" (do not forward notifications to the host terminal)
 // 
 // host_notification_protocol "auto"
+
+// Tokyo Night Dark, with pane-focus made loud.
+// Zellij cannot tint a pane's background, so focus is signalled by the frame:
+// the hover red around the focused pane, near-invisible grey around the rest.
+themes {
+    tokyo-night-focus {
+        fg "#a9b1d6"
+        bg "#1a1b26"
+        black "#383e5a"
+        red "#f93357"
+        green "#9ece6a"
+        yellow "#e0af68"
+        blue "#7aa2f7"
+        magenta "#bb9af7"
+        cyan "#2ac3de"
+        white "#c0caf5"
+        orange "#ff9e64"
+
+        frame_selected {
+            base 249 51 87
+            background 249 51 87
+            emphasis_0 255 255 255
+            emphasis_1 249 51 87
+            emphasis_2 249 51 87
+            emphasis_3 249 51 87
+        }
+        frame_highlight {
+            base 42 195 222
+            background 42 195 222
+            emphasis_0 255 255 255
+            emphasis_1 42 195 222
+            emphasis_2 42 195 222
+            emphasis_3 42 195 222
+        }
+        frame_unselected {
+            base 45 50 70
+            background 45 50 70
+            emphasis_0 45 50 70
+            emphasis_1 45 50 70
+            emphasis_2 45 50 70
+            emphasis_3 45 50 70
+        }
+    }
+    tokyo-night-focus-light {
+        fg "#343b58"
+        bg "#d5d6db"
+        black "#0f0f14"
+        red "#ba4b60"
+        green "#485e30"
+        yellow "#8f5e15"
+        blue "#34548a"
+        magenta "#5a4a78"
+        cyan "#0f4b6e"
+        white "#8289ac"
+        orange "#965027"
+
+        frame_selected {
+            base 186 75 96
+            background 186 75 96
+            emphasis_0 0 0 0
+            emphasis_1 186 75 96
+            emphasis_2 186 75 96
+            emphasis_3 186 75 96
+        }
+        frame_highlight {
+            base 15 75 110
+            background 15 75 110
+            emphasis_0 0 0 0
+            emphasis_1 15 75 110
+            emphasis_2 15 75 110
+            emphasis_3 15 75 110
+        }
+        frame_unselected {
+            base 190 192 202
+            background 190 192 202
+            emphasis_0 190 192 202
+            emphasis_1 190 192 202
+            emphasis_2 190 192 202
+            emphasis_3 190 192 202
+        }
+    }
+}
