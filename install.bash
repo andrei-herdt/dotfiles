@@ -125,6 +125,7 @@ install_packages() {
     git-lfs
     nodejs
     npm
+    gh
   )
 
   sudo apt update
@@ -149,6 +150,14 @@ configure_ghostty() {
   echo "configure ghostty"
   mkdir -p ~/Library/Application\ Support/com.mitchellh.ghostty
   cp ghostty/config.ghostty ~/Library/Application\ Support/com.mitchellh.ghostty/config.ghostty
+}
+
+configure_zellij() {
+  echo "configure zellij"
+
+  cd "$(dirname "${BASH_SOURCE}")"
+  mkdir -p ~/.config/zellij
+  cp zellij/config.kdl ~/.config/zellij/config.kdl
 }
 
 install_oh_my_zsh() {
@@ -247,8 +256,9 @@ install_docker() {
 }
 
 install_neovim() {
+  NVIM_VERSION=$(curl -s "https://api.github.com/repos/neovim/neovim/releases/latest" | grep -Po '"tag_name": "\K[^"]*')
   CUSTOM_NVIM_PATH=/usr/local/bin/nvim.appimage
-  sudo curl -o ${CUSTOM_NVIM_PATH} -LO https://github.com/neovim/neovim/releases/download/v0.11.3/nvim-linux-x86_64.appimage
+  sudo curl -o ${CUSTOM_NVIM_PATH} -LO https://github.com/neovim/neovim/releases/download/${NVIM_VERSION}/nvim-linux-x86_64.appimage
   sudo chmod a+x ${CUSTOM_NVIM_PATH}
   set -u
   sudo update-alternatives --install /usr/bin/nvim nvim "${CUSTOM_NVIM_PATH}" 110
@@ -329,6 +339,11 @@ configure_zsh() {
   cp .zshrc ~
 }
 
+# Only run the interactive/dispatch driver below when this script is
+# executed directly (./install.bash), not when it's sourced to reuse a
+# function (e.g. `source install.bash && install_neovim`).
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+
 IFS=', '
 if [ -n "$1" ]; then
   # non-interactive: ./install.bash "5,11,13,12"
@@ -349,6 +364,7 @@ configure
     14)  color scheme
     15)  vifm
     16)  ghostty
+    17)  zellij
     19) brew packages
     20) homebrew
     21) essential macos packages
@@ -404,6 +420,9 @@ for choice in "${array[@]}"; do
   16)
     configure_ghostty
     ;;
+  17)
+    configure_zellij
+    ;;
   19)
     install_brew_packages
     ;;
@@ -427,9 +446,12 @@ for choice in "${array[@]}"; do
     configure_zsh
     configure_color_scheme
     configure_ghostty
+    configure_zellij
     ;;
   *)
     echo invalid number
     ;;
   esac
 done
+
+fi

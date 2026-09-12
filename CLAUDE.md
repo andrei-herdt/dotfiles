@@ -61,11 +61,16 @@ part of this one.
    ```
    Open `nvim` once afterward so `lazy.nvim` installs plugins.
 
-5. **Zellij config** (tracked here, but not copied by `install.bash`):
-   ```bash
-   mkdir -p ~/.config/zellij
-   cp ~/devel/dotfiles/zellij/config.kdl ~/.config/zellij/config.kdl
-   ```
+5. **Zellij config**: `./install.bash` option `17` (`configure_zellij`,
+   included in `100`) copies `zellij/config.kdl` to
+   `~/.config/zellij/config.kdl` unmodified — settings are identical
+   across machines. Notably `copy_command` is deliberately left unset:
+   the user views both the Mac and any Linux box through Ghostty
+   (locally, and as the SSH client into Linux), and Ghostty supports OSC
+   52, which is zellij's default clipboard mechanism when
+   `copy_command` is unset — it copies to the client's clipboard even
+   over SSH, unlike an OS-local tool (`pbcopy`/`xclip`) which would only
+   ever reach whatever clipboard is local to the box zellij runs on.
 
 6. **Ghostty config**: `./install.bash` option `16` (`configure_ghostty`,
    included in `100`) copies `ghostty/config.ghostty` to

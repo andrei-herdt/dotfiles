@@ -424,7 +424,13 @@ pane_frames false
 // copy_command "wl-copy"                    // wayland
 // copy_command "pbcopy"                     // osx
 //
-copy_command "pbcopy"
+// Left unset deliberately: Ghostty (used both locally on macOS and as the
+// SSH client into Linux boxes) supports OSC 52, so the default already
+// copies correctly to the client's clipboard — including over SSH, where
+// an OS-local tool like xclip/pbcopy would be wrong (it'd target whatever
+// clipboard is local to the box zellij runs on, not the one you're
+// looking at it from).
+// copy_command "xclip -selection clipboard"
 
 // Choose the destination for copied text
 // Allows using the primary selection buffer (on x11/wayland) instead of the system clipboard.
