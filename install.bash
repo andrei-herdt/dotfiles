@@ -83,6 +83,7 @@ install_essential_packages() {
   echo ${packages[*]} | xargs sudo apt install --assume-yes
   unset packages
 
+  install_neovim
 }
 
 install_packages() {
@@ -256,12 +257,27 @@ install_docker() {
 }
 
 install_neovim() {
-  NVIM_VERSION=$(curl -s "https://api.github.com/repos/neovim/neovim/releases/latest" | grep -Po '"tag_name": "\K[^"]*')
-  CUSTOM_NVIM_PATH=/usr/local/bin/nvim.appimage
-  sudo curl -o ${CUSTOM_NVIM_PATH} -LO https://github.com/neovim/neovim/releases/download/${NVIM_VERSION}/nvim-linux-x86_64.appimage
-  sudo chmod a+x ${CUSTOM_NVIM_PATH}
-  set -u
-  sudo update-alternatives --install /usr/bin/nvim nvim "${CUSTOM_NVIM_PATH}" 110
+  echo "install neovim (latest release, user-local, no sudo)"
+
+  # Ubuntu's apt package lags badly (e.g. 0.9.5 on 24.04, LazyVim needs
+  # >=0.11.2), so pull the official prebuilt release straight from GitHub
+  # instead of relying on apt or a PPA.
+  local NVIM_DIR=~/.local/opt/nvim-linux-x86_64
+  local NVIM_TARBALL=/tmp/nvim-linux-x86_64.tar.gz
+
+  curl -fsSL -o "$NVIM_TARBALL" https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
+
+  mkdir -p ~/.local/opt ~/.local/bin
+  rm -rf "$NVIM_DIR"
+  tar -xzf "$NVIM_TARBALL" -C ~/.local/opt
+  rm -f "$NVIM_TARBALL"
+
+  # ~/.local/bin is ahead of /usr/bin in $PATH, so this symlink shadows
+  # an older apt-packaged nvim without touching system packages or sudo.
+  ln -sf "$NVIM_DIR/bin/nvim" ~/.local/bin/nvim
+
+  hash -r
+  nvim --version | head -1
 }
 
 install_lazygit() {
