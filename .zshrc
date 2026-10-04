@@ -102,6 +102,7 @@ alias cr='claude --resume'
 alias cc='claude --continue'
 alias cs='claude --model sonnet'
 alias co='claude --model opus'
+alias serve='python3 -m http.server 8000 --bind 0.0.0.0'
 
 export PATH="/usr/lib/ccache:$PATH"
 
