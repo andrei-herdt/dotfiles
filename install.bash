@@ -44,6 +44,9 @@ install_essential_macos_packages() {
 
   brew install --cask ghostty
 
+  brew install --cask macfuse
+  brew install gromgit/fuse/sshfs-mac
+
   echo "rustup"
   curl https://sh.rustup.rs -sSf | sh
 }
