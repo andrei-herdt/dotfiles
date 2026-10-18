@@ -153,6 +153,18 @@ configure_ghostty() {
   cp ghostty/config.ghostty ~/Library/Application\ Support/com.mitchellh.ghostty/config.ghostty
 }
 
+# Linux always-on box: reconnect wifi when the gateway is unreachable
+# (NetworkManager gives up after a failed roam with 'no-secrets').
+configure_server() {
+  echo "configure server (wifi watchdog)"
+
+  cd "$(dirname "${BASH_SOURCE}")"
+  sudo install -m755 server/wifi-watchdog.sh /usr/local/sbin/
+  sudo install -m644 server/wifi-watchdog.service server/wifi-watchdog.timer /etc/systemd/system/
+  sudo systemctl daemon-reload
+  sudo systemctl enable --now wifi-watchdog.timer
+}
+
 configure_zellij() {
   echo "configure zellij"
 
@@ -424,6 +436,7 @@ configure
     15)  vifm
     16)  ghostty
     17)  zellij
+    18)  server (wifi watchdog, linux only)
     19) brew packages
     20) homebrew
     21) essential macos packages
@@ -484,6 +497,9 @@ for choice in "${array[@]}"; do
     ;;
   17)
     configure_zellij
+    ;;
+  18)
+    configure_server
     ;;
   19)
     install_brew_packages
