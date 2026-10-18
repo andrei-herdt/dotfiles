@@ -161,6 +161,7 @@ configure_server() {
   cd "$(dirname "${BASH_SOURCE}")"
   sudo install -m755 server/wifi-watchdog.sh /usr/local/sbin/
   sudo install -m644 server/wifi-watchdog.service server/wifi-watchdog.timer /etc/systemd/system/
+  sudo install -m644 server/wifi-powersave.conf /etc/NetworkManager/conf.d/
   sudo systemctl daemon-reload
   sudo systemctl enable --now wifi-watchdog.timer
 }
@@ -436,7 +437,7 @@ configure
     15)  vifm
     16)  ghostty
     17)  zellij
-    18)  server (wifi watchdog, linux only)
+    18)  server (wifi watchdog + powersave off, linux only)
     19) brew packages
     20) homebrew
     21) essential macos packages
