@@ -446,6 +446,8 @@ configure
     21) essential macos packages
     22) setup neovim
     23) oh_my_zsh
+    24) openclaw backup (encrypted archive, copy to new host via rsync)
+    25) openclaw restore (prompts for archive path)
     100)  all
 > " -a array
 fi
@@ -519,6 +521,13 @@ for choice in "${array[@]}"; do
     ;;
   23)
     install_oh_my_zsh
+    ;;
+  24)
+    "$(dirname "${BASH_SOURCE}")/openclaw/backup.sh"
+    ;;
+  25)
+    read -r -p "path to openclaw-*.tar.gpg: " archive
+    "$(dirname "${BASH_SOURCE}")/openclaw/restore.sh" "$archive"
     ;;
   100)
     configure_vim
