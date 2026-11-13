@@ -67,6 +67,42 @@ install_treesitter_cli() {
   tree-sitter --version
 }
 
+# One-shot setup for a fresh Ubuntu/Debian dev machine (./install.bash 30):
+# git/vim/tmux/zsh, everything Neovim needs, nvim + config + plugins,
+# zsh with Oh My Zsh, and the tmux/zellij/vim/zsh configs. Skips the
+# git identity (.gitconfig) and the slow YouCompleteMe build.
+install_linux_dev() {
+  cd "$(dirname "${BASH_SOURCE}")" || return 1
+
+  install_neovim_deps
+
+  sudo apt install --assume-yes git curl vim tmux zsh bat html-xml-utils
+  sudo apt install --assume-yes eza || echo "eza not available via apt, skipping"
+
+  # Ubuntu ships bat as 'batcat'
+  mkdir -p ~/.local/bin
+  if ! exists bat && exists batcat; then
+    ln -sf "$(command -v batcat)" ~/.local/bin/bat
+  fi
+
+  install_neovim
+  setup_neovim
+
+  install_oh_my_zsh
+
+  configure_zsh
+  configure_tmux
+  configure_zellij
+  VIM_SKIP_YCM=1 configure_vim
+
+  if [ "$(basename "${SHELL:-}")" != zsh ]; then
+    echo "make zsh the login shell (asks for your password)"
+    chsh -s "$(command -v zsh)" || echo "chsh failed, run it yourself: chsh -s $(command -v zsh)"
+  fi
+
+  echo "done. Log out and back in for the new login shell."
+}
+
 install_neovim_full() {
   install_neovim_deps
   install_neovim
@@ -381,9 +417,11 @@ configure_vim() {
   # install vim plugins
   vim "+PlugInstall" "+qa"
 
-  # compile youcompleteme
-  cd ~/.vim/plugged/youcompleteme || exit 1
-  ./install.py --clang-completer
+  # compile youcompleteme (slow, needs cmake; skip with VIM_SKIP_YCM=1)
+  if [ "${VIM_SKIP_YCM:-0}" != 1 ]; then
+    cd ~/.vim/plugged/youcompleteme || exit 1
+    ./install.py --clang-completer
+  fi
 
   # copy custom snippets
   cd $DIR
@@ -422,7 +460,13 @@ configure_zsh() {
   echo configure zsh
 
   cd "$(dirname "${BASH_SOURCE}")"
+  if [ -f ~/.zshrc ] && ! cmp -s .zshrc ~/.zshrc; then
+    cp ~/.zshrc ~/.zshrc.bak
+    echo "existing ~/.zshrc saved as ~/.zshrc.bak"
+  fi
   cp .zshrc ~
+  # machine-specific aliases (hosts etc.) go here; never overwritten
+  [ -f ~/.zshrc.local ] || touch ~/.zshrc.local
 }
 
 sync_dotfiles() {
@@ -503,6 +547,7 @@ configure
     24) openclaw backup (encrypted archive, copy to new host via rsync)
     25) openclaw restore (prompts for archive path)
     26) neovim full (deps + binary + config + plugins, linux)
+    30) linux dev machine: everything above in one go (vim, tmux, zsh, neovim, zellij)
     100)  all
 > " -a array
 fi
@@ -586,6 +631,9 @@ for choice in "${array[@]}"; do
     ;;
   26)
     install_neovim_full
+    ;;
+  30)
+    install_linux_dev
     ;;
   100)
     configure_vim

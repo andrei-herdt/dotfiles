@@ -58,7 +58,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(vi-mode ssh-agent git fzf z)
+plugins=(vi-mode ssh-agent git fzf)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -95,7 +95,6 @@ alias vi='nvim'
 alias z='zellij'
 alias zl='zellij attach -c "$(zellij list-sessions -s | tail -1)"'
 alias y='yazi'
-alias st='ssh andrei@andrei-thinkpad-t490s'
 alias sz='source ~/.zshrc'
 alias c='claude'
 alias cr='claude --resume'
@@ -163,10 +162,13 @@ alias p=python3
 
 [ -f ~/.ap.zsh ] && source ~/.ap.zsh
 
+# Machine-specific settings (hosts, aliases, keys) live here, outside the repo.
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
+
 # Start ssh-agent and add key
 if [ -z "$SSH_AUTH_SOCK" ] ; then
   eval "$(ssh-agent -s)"
-  ssh-add ~/.ssh/id_ed25519
+  [ -f ~/.ssh/id_ed25519 ] && ssh-add ~/.ssh/id_ed25519
 fi
 
 # ---- Eza (better ls) -----
@@ -197,7 +199,6 @@ _fzf_comprun() {
 # source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 export PATH="$HOME/.local/bin:$PATH"
-export TERM=xterm
 #
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
@@ -220,5 +221,7 @@ fix() {
 
 # Set DISPLAY if not already set
 if [ -z "$DISPLAY" ] && [ -n "$XDG_SESSION_TYPE" ]; then
-  export DISPLAY=:1
+  _x=$(ls /tmp/.X11-unix 2>/dev/null | grep -m1 '^X[0-9]')
+  [ -n "$_x" ] && export DISPLAY=":${_x#X}"
+  unset _x
 fi

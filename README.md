@@ -22,6 +22,16 @@ Select the things you want. On a fresh macOS machine, a good starting
 selection is: `20,21,13,11,12` (Homebrew, essential macOS packages, zsh,
 tmux, git).
 
+### Fresh Linux machine in one step
+
+On Ubuntu/Debian, `./install.bash 30` sets up the whole dev environment:
+git, vim, tmux, zsh with Oh My Zsh, Neovim with its config and dependencies,
+and the tmux, zellij, vim and zsh configs. It asks for your `sudo` password,
+so run it in a normal terminal. It skips `.gitconfig` (your git identity) and
+the YouCompleteMe build; run `./install.bash 12` or `10` for those.
+Machine-specific shell settings go in `~/.zshrc.local`, which is never
+overwritten.
+
 ### Not handled by install.bash
 
 A couple of pieces aren't wired into the installer and need a manual step:
