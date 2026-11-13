@@ -26,11 +26,13 @@ tmux, git).
 
 A couple of pieces aren't wired into the installer and need a manual step:
 
-- **Neovim config** lives in a separate repo, not in this one:
-  ```bash
-  mkdir -p ~/.config && cd ~/.config
-  git clone git@github.com:andrei-herdt/neovim-config.git nvim
-  ```
+- **Neovim** has its own installer option. On Linux, run `./install.bash 26`
+  to install the dependencies the config needs (compiler, node, fd, fzf,
+  ripgrep, xclip, lazygit, tree-sitter), the latest nvim release, the config
+  from the separate
+  [neovim-config](https://github.com/andrei-herdt/neovim-config) repo, and its
+  plugins and Treesitter parsers. On macOS the equivalent packages come with
+  option 21, and `./install.bash 22` clones the config.
 - **Zellij config** is tracked here but only ever copied, never symlinked:
   ```bash
   mkdir -p ~/.config/zellij

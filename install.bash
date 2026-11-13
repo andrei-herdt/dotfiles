@@ -18,9 +18,59 @@ install_homebrew() {
 setup_neovim() {
   mkdir -p ~/.config/
 
-  cd ~/.config
+  if [ -d ~/.config/nvim/.git ] || [ -f ~/.config/nvim/init.lua ]; then
+    echo "~/.config/nvim already exists, skipping clone"
+  else
+    git clone https://github.com/andrei-herdt/neovim-config.git ~/.config/nvim
+  fi
 
-  git clone https://github.com/andrei-herdt/neovim-config.git nvim
+  sync_neovim_plugins
+}
+
+# Install plugins and Treesitter parsers headlessly so the first real
+# launch is not a wall of compile output. Needs gcc/make (see
+# install_neovim_deps).
+sync_neovim_plugins() {
+  echo "sync neovim plugins and treesitter parsers"
+  nvim --headless "+Lazy! sync" +qa
+  nvim --headless "+lua require('nvim-treesitter').install({'lua','vim','vimdoc','python','c','cpp','bash','markdown','markdown_inline','json','yaml','toml'}):wait(300000)" +qa
+}
+
+# Everything the Neovim (LazyVim) config needs besides nvim itself:
+# a C compiler for Treesitter parsers, node for Mason language servers,
+# fd/fzf/ripgrep for pickers and xclip for the system clipboard.
+install_neovim_deps() {
+  echo "install neovim dependencies"
+
+  sudo apt update
+  sudo apt install --assume-yes build-essential fd-find fzf ripgrep xclip nodejs npm
+
+  # Ubuntu ships fd as 'fdfind'
+  mkdir -p ~/.local/bin
+  if ! exists fd && exists fdfind; then
+    ln -sf "$(command -v fdfind)" ~/.local/bin/fd
+  fi
+
+  install_lazygit
+  install_treesitter_cli
+}
+
+install_treesitter_cli() {
+  echo "install tree-sitter cli (user-local, no sudo)"
+
+  local tmp
+  tmp=$(mktemp -d)
+  curl -fsSL https://github.com/tree-sitter/tree-sitter/releases/latest/download/tree-sitter-linux-x64.gz | gunzip >"$tmp/tree-sitter"
+  mkdir -p ~/.local/bin
+  install "$tmp/tree-sitter" ~/.local/bin/tree-sitter
+  rm -rf "$tmp"
+  tree-sitter --version
+}
+
+install_neovim_full() {
+  install_neovim_deps
+  install_neovim
+  setup_neovim
 }
 
 install_brew_packages() {
@@ -36,7 +86,7 @@ install_brew_packages() {
 install_essential_macos_packages() {
   echo install some basic command line utilities using brew
 
-  brew_packages="wget curl git python3 rsync tmux tree neovim xsel zsh the_silver_searcher htop openssh xclip vifm yazi rename lazygit fzf fd sshpass git-lfs zellij"
+  brew_packages="wget curl git python3 rsync tmux tree neovim xsel zsh the_silver_searcher htop openssh xclip vifm yazi rename lazygit fzf fd ripgrep node tree-sitter-cli sshpass git-lfs zellij"
 
   brew update
   brew install $brew_packages
@@ -297,12 +347,16 @@ install_neovim() {
 }
 
 install_lazygit() {
-  LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
-  FILENAME=lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz
-  cd ~/Downloads
-  curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/$FILENAME"
-  tar -xf lazygit.tar.gz lazygit
-  sudo install lazygit /usr/local/bin
+  echo "install lazygit (user-local, no sudo)"
+
+  local version tmp
+  version=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
+  tmp=$(mktemp -d)
+  curl -fsSL "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${version}_Linux_x86_64.tar.gz" | tar -xz -C "$tmp" lazygit
+  mkdir -p ~/.local/bin
+  install "$tmp/lazygit" ~/.local/bin/lazygit
+  rm -rf "$tmp"
+  lazygit --version | head -1
 }
 
 install_rust() {
@@ -448,6 +502,7 @@ configure
     23) oh_my_zsh
     24) openclaw backup (encrypted archive, copy to new host via rsync)
     25) openclaw restore (prompts for archive path)
+    26) neovim full (deps + binary + config + plugins, linux)
     100)  all
 > " -a array
 fi
@@ -528,6 +583,9 @@ for choice in "${array[@]}"; do
   25)
     read -r -p "path to openclaw-*.tar.gpg: " archive
     "$(dirname "${BASH_SOURCE}")/openclaw/restore.sh" "$archive"
+    ;;
+  26)
+    install_neovim_full
     ;;
   100)
     configure_vim
