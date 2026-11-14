@@ -64,6 +64,46 @@ Everything `install.bash` does works the same way — it `cp`s files into
 config after install, copy the change back into this repo and commit/push
 it manually, on whichever file changed.
 
+## What goes where: workstation vs. MacBook
+
+The setup assumes two roles. The **workstation** (Linux) is where the work
+happens: editors, multiplexers, compilers, long-running sessions. The
+**MacBook** is a thin frontend: a good terminal, ssh, and a few helpers for
+moving files. Keep the Mac lean and put anything heavy on the workstation.
+
+| | Workstation (Linux) | MacBook (frontend) |
+|---|---|---|
+| Installer | `./install.bash 30` | `./install.bash 31` |
+| Terminal | none, it is reached over ssh | Ghostty (`ghostty/config.ghostty`) |
+| Shell | zsh + Oh My Zsh, `.zshrc` | zsh, `.zshrc` (works without Oh My Zsh) |
+| Multiplexer | tmux and zellij: sessions live here and survive disconnects | not needed |
+| Editor | Neovim + `neovim-config`, vim | not needed |
+| Dev tooling | compiler, node, ripgrep, fd, lazygit, tree-sitter CLI, ccache | none |
+| CLI helpers | bat, eza, fzf | fzf, fd, bat, eza, tree, htop |
+| Transfer / network | openssh-server | `rsync` (macOS ships a very old one), `openssh`, `sshpass`, `dl`, `ws` |
+| Config | `.tmux.conf`, `zellij/config.kdl`, `.vimrc`, `.gitconfig` | `ghostty/config.ghostty`, `ssh/config`, `.macos-ssh` |
+| Clipboard | tmux/zellij send OSC 52 (`set-clipboard on`, no `copy_command`) | Ghostty receives it, so remote copies land in the Mac clipboard |
+| Always-on box | option `18` (wifi watchdog, power save off) | n/a |
+
+How the pieces fit:
+
+- **Clipboard over ssh:** copying inside tmux or zellij on the workstation
+  reaches the Mac clipboard through OSC 52, which Ghostty supports. Do not set
+  `copy_command` to `xclip`/`pbcopy` in zellij: that would target the
+  clipboard of the machine zellij runs on.
+- **Terminfo:** Ghostty installs its terminfo on the remote host on first
+  connect (`shell-integration-features = ssh-terminfo,ssh-env`). Do not force
+  `TERM=xterm`.
+- **ssh:** `ssh/config` enables connection reuse, so repeated `ssh`/`scp`/`dl`
+  to the same host are instant after the first. Put hosts in
+  `~/.ssh/config.local` and `DL_HOST` in `~/.zshrc.local`, both untracked.
+- **Machine-specific files** (never committed or overwritten): `~/.zshrc.local`,
+  `~/.ssh/config.local`, `~/.gitconfig`.
+- **Working locally on a Mac anyway?** `./install.bash 27` adds tmux, neovim,
+  zellij, lazygit, yazi, ripgrep and friends.
+- **Keeping in sync:** `./install.bash 6` pulls and re-applies the config
+  steps on either kind of machine.
+
 ## Your private configuration
 
 The following files are reserved for your private local configuration:
