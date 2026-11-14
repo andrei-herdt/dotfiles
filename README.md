@@ -18,9 +18,19 @@ Run the install script.
 ./install.bash
 ```
 
-Select the things you want. On a fresh macOS machine, a good starting
-selection is: `20,21,13,11,12` (Homebrew, essential macOS packages, zsh,
-tmux, git).
+Select the things you want. On a Mac that is mainly an ssh client into
+workstations, `./install.bash 31` does it all: Homebrew, a slim package set
+(git, fzf, fd, bat, eza, rsync, ssh tools, Ghostty), zsh + `dl`, the Ghostty
+config, an ssh config template and trimmed macOS defaults (`.macos-ssh`, no
+sudo). Tools for working locally (tmux, neovim, zellij, lazygit, ...) are
+option `27`. On a Linux dev machine use `30`.
+
+### Copying files to a workstation: `dl`
+
+Put `DL_HOST=user@workstation` in `~/.zshrc.local` (never committed). Then
+`dl **<Tab>` opens an fzf picker (Downloads first, newest first, then the rest
+of `~`), `dl -l` sends the latest download, `dl <name>` looks in `~/Downloads`,
+and `ws` ssh-es to the same host. Hosts for plain ssh go in `~/.ssh/config.local`.
 
 ### Fresh Linux machine in one step
 

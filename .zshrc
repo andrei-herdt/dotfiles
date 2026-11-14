@@ -5,6 +5,13 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# Homebrew (macOS; Apple Silicon and Intel prefixes)
+if [[ -x /opt/homebrew/bin/brew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [[ -x /usr/local/bin/brew ]]; then
+  eval "$(/usr/local/bin/brew shellenv)"
+fi
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -60,7 +67,15 @@ HIST_STAMPS="yyyy-mm-dd"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(vi-mode ssh-agent git fzf)
 
-source $ZSH/oh-my-zsh.sh
+if [[ -r $ZSH/oh-my-zsh.sh ]]; then
+  source $ZSH/oh-my-zsh.sh
+else
+  # oh-my-zsh not installed (e.g. a Mac used only as an ssh client):
+  # keep vi keys, completion and fzf bindings/completion working.
+  bindkey -v
+  autoload -U compinit && compinit -u
+  command -v fzf >/dev/null && source <(fzf --zsh)
+fi
 
 # User configuration
 
@@ -84,7 +99,11 @@ export EDITOR='nvim'
 #
 alias t='tmux attach || tmux new'
 alias tt='tmux attach -t 1 || tmux new -t 0'
-alias cclip='xclip -selection clipboard'
+if [[ $OSTYPE == darwin* ]]; then
+  alias cclip='pbcopy'
+else
+  alias cclip='xclip -selection clipboard'
+fi
 alias git='git --no-pager'
 alias zshconfig="vi ~/.zshrc"
 alias vimconfig="vi ~/.vimrc"
@@ -103,11 +122,9 @@ alias cs='claude --model sonnet'
 alias co='claude --model opus'
 alias serve='python3 -m http.server 8000 --bind 0.0.0.0'
 
-export PATH="/usr/lib/ccache:$PATH"
+[[ -d /usr/lib/ccache ]] && export PATH="/usr/lib/ccache:$PATH"
 
 export KEYTIMEOUT=1
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # {{{1 vi mode cursor indicator
 function zle-keymap-select zle-line-init
@@ -148,9 +165,6 @@ webpage_title (){
 
 alias rnr=read_and_review
 
-# autojump
-[[ -s ~/.autojump/etc/profile.d/autojump.sh ]] && source ~/.autojump/etc/profile.d/autojump.sh
-
 autoload -U compinit && compinit -u
 
 dockerexec (){
@@ -164,6 +178,9 @@ alias p=python3
 
 # Machine-specific settings (hosts, aliases, keys) live here, outside the repo.
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
+
+# dl (copy files to the workstation) and ws (ssh there); needs DL_HOST from ~/.zshrc.local
+[ -f ~/.zsh/dl.zsh ] && source ~/.zsh/dl.zsh
 
 # Start ssh-agent and add key
 if [ -z "$SSH_AUTH_SOCK" ] ; then
@@ -199,21 +216,6 @@ _fzf_comprun() {
 # source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 export PATH="$HOME/.local/bin:$PATH"
-#
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-# __conda_setup="$('/home/andreiherdt/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-# if [ $? -eq 0 ]; then
-#     eval "$__conda_setup"
-# else
-#     if [ -f "/home/andreiherdt/miniconda3/etc/profile.d/conda.sh" ]; then
-#         . "/home/andreiherdt/miniconda3/etc/profile.d/conda.sh"
-#     else
-#         export PATH="/home/andreiherdt/miniconda3/bin:$PATH"
-#     fi
-# fi
-# unset __conda_setup
-# <<< conda initialize <<<
 
 fix() {
   vi $(git diff --name-only | uniq)

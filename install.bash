@@ -119,16 +119,28 @@ install_brew_packages() {
   unset brew_packages
 }
 
+# Slim set for a Mac that is mainly an ssh client into workstations.
 install_essential_macos_packages() {
-  echo install some basic command line utilities using brew
+  echo install ssh-client utilities using brew
 
-  brew_packages="wget curl git python3 rsync tmux tree neovim xsel zsh the_silver_searcher htop openssh xclip vifm yazi rename lazygit fzf fd ripgrep node tree-sitter-cli sshpass git-lfs zellij"
+  brew_packages="git git-lfs curl wget rsync openssh sshpass fzf fd bat eza tree htop"
 
   brew update
   brew install $brew_packages
   unset brew_packages
 
   brew install --cask ghostty
+}
+
+# Heavier tools for doing real work locally on the Mac (not needed when only ssh-ing).
+install_macos_extras() {
+  echo install local dev tools using brew
+
+  brew_packages="tmux neovim zellij lazygit yazi vifm ripgrep node tree-sitter-cli the_silver_searcher rename python3"
+
+  brew update
+  brew install $brew_packages
+  unset brew_packages
 
   brew install --cask macfuse
   brew install gromgit/fuse/sshfs-mac
@@ -465,8 +477,53 @@ configure_zsh() {
     echo "existing ~/.zshrc saved as ~/.zshrc.bak"
   fi
   cp .zshrc ~
+  mkdir -p ~/.zsh
+  cp zsh/dl.zsh ~/.zsh/dl.zsh
   # machine-specific aliases (hosts etc.) go here; never overwritten
-  [ -f ~/.zshrc.local ] || touch ~/.zshrc.local
+  if [ ! -f ~/.zshrc.local ]; then
+    cat >~/.zshrc.local <<'EOF'
+# Machine-specific settings, not tracked in git.
+# DL_HOST=user@my-workstation   # target for `dl` (copy files) and `ws` (ssh)
+# DL_DIR=                       # optional remote directory for `dl`
+EOF
+  fi
+}
+
+# Never overwrites an existing ~/.ssh/config. Hosts go in ~/.ssh/config.local.
+configure_ssh() {
+  echo configure ssh
+
+  cd "$(dirname "${BASH_SOURCE}")"
+  mkdir -p ~/.ssh && chmod 700 ~/.ssh
+  if [ -f ~/.ssh/config ]; then
+    echo "~/.ssh/config exists, leaving it alone (template: ssh/config)"
+  else
+    cp ssh/config ~/.ssh/config
+    chmod 600 ~/.ssh/config
+  fi
+}
+
+# Trimmed macOS defaults (no sudo). See .macos for the full upstream script.
+configure_macos_defaults() {
+  echo "apply macOS defaults"
+
+  cd "$(dirname "${BASH_SOURCE}")"
+  bash .macos-ssh
+}
+
+# One-shot setup for a Mac used mainly as an ssh client (./install.bash 31).
+install_macos_ssh_client() {
+  cd "$(dirname "${BASH_SOURCE}")" || return 1
+
+  exists brew || install_homebrew
+  install_essential_macos_packages
+
+  configure_zsh
+  configure_ghostty
+  configure_ssh
+  configure_macos_defaults
+
+  echo "done. Set DL_HOST in ~/.zshrc.local, then try: dl **<Tab>"
 }
 
 sync_dotfiles() {
@@ -547,7 +604,11 @@ configure
     24) openclaw backup (encrypted archive, copy to new host via rsync)
     25) openclaw restore (prompts for archive path)
     26) neovim full (deps + binary + config + plugins, linux)
+    27) macos extras (tmux, neovim, zellij, lazygit, ... for working locally)
+    28) ssh config (template, never overwrites)
+    29) macos defaults (trimmed .macos-ssh, no sudo)
     30) linux dev machine: everything above in one go (vim, tmux, zsh, neovim, zellij)
+    31) macos ssh-client machine: homebrew, slim packages, zsh, ghostty, ssh, defaults
     100)  all
 > " -a array
 fi
@@ -632,8 +693,20 @@ for choice in "${array[@]}"; do
   26)
     install_neovim_full
     ;;
+  27)
+    install_macos_extras
+    ;;
+  28)
+    configure_ssh
+    ;;
+  29)
+    configure_macos_defaults
+    ;;
   30)
     install_linux_dev
+    ;;
+  31)
+    install_macos_ssh_client
     ;;
   100)
     configure_vim

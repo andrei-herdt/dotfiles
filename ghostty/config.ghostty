@@ -1,1 +1,8 @@
 theme = light:TokyoNight Day,dark:TokyoNight Night
+
+# Mostly used as an ssh client: install Ghostty's terminfo on the remote host
+# on first connect (falls back to xterm-256color), and export COLORTERM etc.
+shell-integration-features = ssh-terminfo,ssh-env
+
+# Make Option act as Alt so Alt/Meta shortcuts work in tmux, zellij and nvim
+macos-option-as-alt = true

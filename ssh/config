@@ -1,0 +1,15 @@
+# Installed to ~/.ssh/config by `install.bash` only if none exists.
+# Host entries (workstations etc.) belong in ~/.ssh/config.local -- not committed.
+Include ~/.ssh/config.local
+
+Host *
+  AddKeysToAgent yes
+  # UseKeychain is macOS-only; ignored by other OpenSSH builds
+  IgnoreUnknown UseKeychain
+  UseKeychain yes
+  IdentityFile ~/.ssh/id_ed25519
+  # reuse one connection for repeated ssh/scp (makes `dl` instant after the first copy)
+  ControlMaster auto
+  ControlPath ~/.ssh/cm-%C
+  ControlPersist 10m
+  ServerAliveInterval 30
