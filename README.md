@@ -20,10 +20,10 @@ Run the install script.
 
 Select the things you want. On a Mac that is mainly an ssh client into
 workstations, `./install.bash 31` does it all: Homebrew, a slim package set
-(git, fzf, fd, bat, eza, rsync, ssh tools, Ghostty), zsh + `dl`, the Ghostty
-config, an ssh config template and trimmed macOS defaults (`.macos-ssh`, no
-sudo). Tools for working locally (tmux, neovim, zellij, lazygit, ...) are
-option `27`. On a Linux dev machine use `30`.
+(git, fzf, fd, bat, eza, rsync, ssh tools, Neovim, Ghostty), zsh + `dl`, the
+Neovim config, the Ghostty config, an ssh config template and trimmed macOS
+defaults (`.macos-ssh`, no sudo). Heavier local tools (tmux, zellij, lazygit,
+yazi, ...) are option `27`. On a Linux dev machine use `30`.
 
 ### Copying files to a workstation: `dl`
 
@@ -77,8 +77,8 @@ moving files. Keep the Mac lean and put anything heavy on the workstation.
 | Terminal | none, it is reached over ssh | Ghostty (`ghostty/config.ghostty`) |
 | Shell | zsh + Oh My Zsh, `.zshrc` | zsh, `.zshrc` (works without Oh My Zsh) |
 | Multiplexer | tmux and zellij: sessions live here and survive disconnects | not needed |
-| Editor | Neovim + `neovim-config`, vim | not needed |
-| Dev tooling | compiler, node, ripgrep, fd, lazygit, tree-sitter CLI, ccache | none |
+| Editor | Neovim + `neovim-config`, vim | Neovim + `neovim-config` (files get opened locally too) |
+| Dev tooling | compiler, node, ripgrep, fd, lazygit, tree-sitter CLI, ccache | ripgrep and tree-sitter CLI for the Neovim config only |
 | CLI helpers | bat, eza, fzf | fzf, fd, bat, eza, tree, htop |
 | Transfer / network | openssh-server | `rsync` (macOS ships a very old one), `openssh`, `sshpass`, `dl`, `ws` |
 | Config | `.tmux.conf`, `zellij/config.kdl`, `.vimrc`, `.gitconfig` | `ghostty/config.ghostty`, `ssh/config`, `.macos-ssh` |
@@ -99,8 +99,9 @@ How the pieces fit:
   `~/.ssh/config.local` and `DL_HOST` in `~/.zshrc.local`, both untracked.
 - **Machine-specific files** (never committed or overwritten): `~/.zshrc.local`,
   `~/.ssh/config.local`, `~/.gitconfig`.
-- **Working locally on a Mac anyway?** `./install.bash 27` adds tmux, neovim,
-  zellij, lazygit, yazi, ripgrep and friends.
+- **Working locally on a Mac more heavily?** `./install.bash 27` adds tmux,
+  zellij, lazygit, yazi and friends. Aliases for tools that are not installed
+  (`lg`, `z`, `y`) are skipped automatically.
 - **Keeping in sync:** `./install.bash 6` pulls and re-applies the config
   steps on either kind of machine.
 

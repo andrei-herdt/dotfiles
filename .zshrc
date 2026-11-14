@@ -109,11 +109,14 @@ alias zshconfig="vi ~/.zshrc"
 alias vimconfig="vi ~/.vimrc"
 alias fn='find . -name'
 alias viag='/usr/local/bin/viag.sh'
-alias lg='lazygit'
 alias vi='nvim'
-alias z='zellij'
-alias zl='zellij attach -c "$(zellij list-sessions -s | tail -1)"'
-alias y='yazi'
+# only alias tools that are installed on this machine
+(( $+commands[lazygit] )) && alias lg='lazygit'
+if (( $+commands[zellij] )); then
+  alias z='zellij'
+  alias zl='zellij attach -c "$(zellij list-sessions -s | tail -1)"'
+fi
+(( $+commands[yazi] )) && alias y='yazi'
 alias sz='source ~/.zshrc'
 alias c='claude'
 alias cr='claude --resume'

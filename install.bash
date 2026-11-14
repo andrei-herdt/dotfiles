@@ -123,7 +123,8 @@ install_brew_packages() {
 install_essential_macos_packages() {
   echo install ssh-client utilities using brew
 
-  brew_packages="git git-lfs curl wget rsync openssh sshpass fzf fd bat eza tree htop"
+  # neovim (+ ripgrep, tree-sitter-cli for its config) because files get opened/edited locally too
+  brew_packages="git git-lfs curl wget rsync openssh sshpass fzf fd bat eza tree htop neovim ripgrep tree-sitter-cli"
 
   brew update
   brew install $brew_packages
@@ -136,7 +137,7 @@ install_essential_macos_packages() {
 install_macos_extras() {
   echo install local dev tools using brew
 
-  brew_packages="tmux neovim zellij lazygit yazi vifm ripgrep node tree-sitter-cli the_silver_searcher rename python3"
+  brew_packages="tmux zellij lazygit yazi vifm node the_silver_searcher rename python3"
 
   brew update
   brew install $brew_packages
@@ -517,6 +518,7 @@ install_macos_ssh_client() {
 
   exists brew || install_homebrew
   install_essential_macos_packages
+  setup_neovim
 
   configure_zsh
   configure_ghostty
@@ -604,7 +606,7 @@ configure
     24) openclaw backup (encrypted archive, copy to new host via rsync)
     25) openclaw restore (prompts for archive path)
     26) neovim full (deps + binary + config + plugins, linux)
-    27) macos extras (tmux, neovim, zellij, lazygit, ... for working locally)
+    27) macos extras (tmux, zellij, lazygit, yazi, ... for heavier local work)
     28) ssh config (template, never overwrites)
     29) macos defaults (trimmed .macos-ssh, no sudo)
     30) linux dev machine: everything above in one go (vim, tmux, zsh, neovim, zellij)
